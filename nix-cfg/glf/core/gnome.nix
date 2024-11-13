@@ -33,8 +33,11 @@
 	  "org/gnome/desktop/wm/preferences" = {
 	    button-layout = "appmenu:minimize,maximize,close";
 	    theme = "adw-gtk3";
-	    # focus-mode = "click";
-	    # visual-bell = false;
+	  };
+	  "org/gnome/desktop/interface" = {
+	    cursor-theme="Adwaita";
+	    gtk-theme="adw-gtk3";
+	    icon-theme="Tela-circle";
 	  };
 	  "org/gnome/desktop/peripherals/touchpad" = {
 	    click-method = "areas";

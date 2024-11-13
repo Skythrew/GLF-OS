@@ -39,9 +39,8 @@
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.glf = {
+  users.users.nixos= {
     isNormalUser = true;
-    description = "glf";
     extraGroups = [ "networkmanager" "wheel" ];
     # packages = with pkgs; [];
   };

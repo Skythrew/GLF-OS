@@ -26,6 +26,7 @@
     ./vmmaxmapcount.nix
     ./printing.nix
     ./garbageCollector.nix
+    ./cpu
   ];
   
 }

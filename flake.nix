@@ -20,7 +20,12 @@
                 (self: super: {
                   calamares-nixos-extensions = super.calamares-nixos-extensions.overrideAttrs (oldAttrs: {
                     postInstall = ''
-                      cp ${./patches/main.py} $out/lib/calamares/modules/nixos/main.py
+                      cp ${./patches/calamares-nixos-extensions/modules/nixos/main.py} $out/lib/calamares/modules/nixos/main.py
+		      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/show.qml} $out/share/calamares/branding/nixos/show.qml
+		      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/white.png} $out/share/calamares/branding/nixos/white.png
+		      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/base.png} $out/share/calamares/branding/nixos/base.png
+		      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/fast.png} $out/share/calamares/branding/nixos/fast.png
+		      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/gaming.png} $out/share/calamares/branding/nixos/gaming.png
                     '';
                   });
                 })

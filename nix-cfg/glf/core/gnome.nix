@@ -4,6 +4,12 @@
 { lib, pkgs, ... }:
 
 {
+
+  programs.kdeconnect = {
+    enable = true;
+    package = pkgs.gnomeExtensions.gsconnect;
+  };
+  
   environment = {
     systemPackages = with pkgs; [
       gnomeExtensions.caffeine

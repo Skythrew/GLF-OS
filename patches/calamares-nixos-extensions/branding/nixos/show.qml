@@ -33,7 +33,7 @@ Presentation
         Text {
             id: text1
             anchors.centerIn: parent
-            text: "Gaming"
+            text: "A community of players"
             font.pixelSize: 30
             wrapMode: Text.WordWrap
             width: presentation.width
@@ -51,9 +51,8 @@ Presentation
         Text {
             anchors.horizontalCenter: background1.horizontalCenter
             anchors.top: text1.bottom
-            text: "GLF OS is fast. Really.<br/>"+
-                  "It has been designed from the beginning for optimal out-of-the-box performance.<br/>"+
-                  "We regularly run benchmarks to make sure it remains at the top for gaming.<br/>"
+            text: "The tools you need to play are natively integrated.<br/>"+
+                  "We also tested the applications needed by content creators for their work. <br/>"
             wrapMode: Text.WordWrap
             width: presentation.width
             horizontalAlignment: Text.Center
@@ -64,7 +63,7 @@ Presentation
         Text {
             id: text2
             anchors.centerIn: parent
-            text: "Declarative"
+            text: "Based on NixOS"
             font.pixelSize: 30
             wrapMode: Text.WordWrap
             width: presentation.width
@@ -113,11 +112,9 @@ Presentation
         Text {
             anchors.horizontalCenter: background3.horizontalCenter
             anchors.top: text3.bottom
-            text: "Nix ensures that installing or upgrading one package<br/>"+
-                  "<b>cannot break other packages.</b> It allows you to <b>roll<br/>"+
-                  "back to previous versions,</b> and ensures that no<br/>"+
-                  "package is in an inconsistent state during an<br/>"+
-                  "upgrade."
+            text: "GLF OS is fast. Really.<br/>"+
+                  "It has been designed from the beginning for optimal out-of-the-box performance.<br/>"+
+                  "We regularly run benchmarks to make sure it remains at the top for gaming.<br/>"
             wrapMode: Text.WordWrap
             width: presentation.width
             horizontalAlignment: Text.Center

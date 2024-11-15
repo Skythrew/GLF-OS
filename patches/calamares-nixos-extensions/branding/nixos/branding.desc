@@ -115,13 +115,13 @@ navigation: widget
 # are visible as buttons there if the corresponding *show* keys
 # are set to "true" (they can also be overridden).
 strings:
-    productName:         "${NAME}"
-    shortProductName:    NixOS
+    productName:         "GLF-OS" 
+    shortProductName:    GLF-OS  
     version:             
     shortVersion:        
-    versionedName:       NixOS
-    shortVersionedName:  NixOS
-    bootloaderEntryName: NixOS
+    versionedName:       GLF-OS
+    shortVersionedName:  GLF-OS
+    bootloaderEntryName: GLF-OS
     productUrl:          https://nixos.org/
     supportUrl:          https://nixos.org/manual/nixos
     knownIssuesUrl:      https://github.com/NixOS/nixpkgs/issues

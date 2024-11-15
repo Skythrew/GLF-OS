@@ -27,6 +27,7 @@
     ./printing.nix
     ./garbageCollector.nix
     ./cpu
+    ./unfree.nix
   ];
   
 }

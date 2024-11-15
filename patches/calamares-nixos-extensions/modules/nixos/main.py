@@ -125,109 +125,6 @@ cfggnome = """  # Enable the X11 windowing system.
 
 """
 
-cfgplasma5 = """  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
-
-"""
-
-cfgplasma6 = """  # Enable the X11 windowing system.
-  # You can disable this if you're only using the Wayland session.
-  services.xserver.enable = true;
-
-  # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
-
-"""
-
-cfgxfce = """  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the XFCE Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.xfce.enable = true;
-
-"""
-
-cfgpantheon = """  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the Pantheon Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.pantheon.enable = true;
-
-"""
-
-cfgcinnamon = """  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the Cinnamon Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.cinnamon.enable = true;
-
-"""
-
-cfgmate = """  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the MATE Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.mate.enable = true;
-
-"""
-
-cfgenlightenment = """  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the Enlightenment Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.enlightenment.enable = true;
-
-  # Enable acpid
-  services.acpid.enable = true;
-
-"""
-
-cfglxqt = """  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the LXQT Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.lxqt.enable = true;
-
-"""
-
-cfglumina = """  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the Lumina Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.lumina.enable = true;
-
-"""
-
-cfgbudgie = """  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the Budgie Desktop environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.budgie.enable = true;
-
-"""
-
-cfgdeepin = """  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the Deepin Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.deepin.enable = true;
-
-"""
-
 cfgkeymap = """  # Configure keymap in X11
   services.xserver.xkb = {
     layout = "@@kblayout@@";
@@ -263,6 +160,7 @@ cfgmisc = """  # Enable CUPS to print documents.
   # services.xserver.libinput.enable = true;
 
 """
+
 cfgusers = """  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.@@username@@ = {
     isNormalUser = true;
@@ -577,28 +475,6 @@ def run():
     # Choose desktop environment
     if gs.value("packagechooser_packagechooser") == "gnome":
         cfg += cfggnome
-    elif gs.value("packagechooser_packagechooser") == "plasma5":
-        cfg += cfgplasma5
-    elif gs.value("packagechooser_packagechooser") == "plasma6":
-        cfg += cfgplasma6
-    elif gs.value("packagechooser_packagechooser") == "xfce":
-        cfg += cfgxfce
-    elif gs.value("packagechooser_packagechooser") == "pantheon":
-        cfg += cfgpantheon
-    elif gs.value("packagechooser_packagechooser") == "cinnamon":
-        cfg += cfgcinnamon
-    elif gs.value("packagechooser_packagechooser") == "mate":
-        cfg += cfgmate
-    elif gs.value("packagechooser_packagechooser") == "enlightenment":
-        cfg += cfgenlightenment
-    elif gs.value("packagechooser_packagechooser") == "lxqt":
-        cfg += cfglxqt
-    elif gs.value("packagechooser_packagechooser") == "lumina":
-        cfg += cfglumina
-    elif gs.value("packagechooser_packagechooser") == "budgie":
-        cfg += cfgbudgie
-    elif gs.value("packagechooser_packagechooser") == "deepin":
-        cfg += cfgdeepin
 
     if (
         gs.value("keyboardLayout") is not None

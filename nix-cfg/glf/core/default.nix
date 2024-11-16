@@ -1,9 +1,7 @@
 {
 
   imports = [
-    ./steam.nix
-    ./lutris.nix
-    ./heroic.nix
+    ./gaming
     ./flatpak.nix
     ./discord.nix
     ./firefox.nix
@@ -24,7 +22,7 @@
     ./settings.nix
     # ./davinciResolve.nix
     ./vmmaxmapcount.nix
-    ./printing.nix
+    ./printing
     ./garbageCollector.nix
     ./cpu
     ./unfree.nix

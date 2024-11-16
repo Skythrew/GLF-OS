@@ -61,13 +61,27 @@
               "appindicatorsupport@rgcjonas.gmail.com"
               "dash-to-dock@micxgx.gmail.com"
 	    ];
+	    favorite-apps = [
+	      "firefox.desktop"
+	      "steam.desktop"
+	      "net.lutris.Lutris.desktop"
+	      "com.heroicgameslauncher.hgl.desktop"
+	      "discord.desktop"
+	      "thunderbird.desktop"
+	      "org.gnome.Nautilus.desktop"
+	      "org.gnome.Software.desktop"
+	      "org.gnome.Calendar.desktop"
+	    ];
 	  };
 	  "org/gnome/shell/extensions/dash-to-dock" = {
-	    click-action="minimize-or-overview";
-	    dock-position="BOTTOM";
-	    isolate-monitor=false;
-	    multi-monitor=true;
-	    show-mounts-network=true;
+	    click-action        = "minimize-or-overview";
+	    dock-position       = "BOTTOM";
+	    isolate-monitor     = false;
+	    multi-monitor       = true;
+	    show-mounts-network = true;
+	    always-center-icons = true;
+	    dash-max-icon-size  = "32";
+	    extend-height       = true;
 	  };
     		  "org/gnome/mutter" = {
 	    check-alive-timeout = lib.gvariant.mkUint32 30000;

@@ -80,7 +80,7 @@
 	    multi-monitor       = true;
 	    show-mounts-network = true;
 	    always-center-icons = true;
-	    dash-max-icon-size  = "32";
+	    dash-max-icon-size  = lib.gvariant.mkInt32 32;
 	    extend-height       = true;
 	  };
     		  "org/gnome/mutter" = {

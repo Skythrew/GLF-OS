@@ -16,9 +16,9 @@
       gnomeExtensions.appindicator
       gnomeExtensions.dash-to-dock
       gnomeExtensions.gsconnect
-      gnome.gnome-software
-      gnome.adwaita-icon-theme
-      gnome.gnome-tweaks
+      gnome-software
+      adwaita-icon-theme
+      gnome-tweaks
       vlc
       graphite-gtk-theme
       tela-circle-icon-theme
@@ -27,7 +27,7 @@
   };
 
   services = {
-    udev.packages = [ pkgs.gnome.gnome-settings-daemon ];
+    udev.packages = [ pkgs.gnome-settings-daemon ];
     xserver.excludePackages = [ pkgs.xterm ];
   };
 

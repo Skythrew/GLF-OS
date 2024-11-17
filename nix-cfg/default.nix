@@ -2,17 +2,17 @@
   imports = [
     ./hardware-configuration.nix
 
-    ./modules/nh.nix
-    ./modules/boot.nix
-    ./modules/time.nix
-    ./modules/users.nix
-    ./modules/gnome.nix
-    ./modules/nvidia.nix
-    ./modules/fstrim.nix
-    ./modules/gaming.nix
-    ./modules/montage.nix
-    ./modules/xserver.nix
-    ./modules/pipewire.nix
-    ./modules/configuration.nix
+    ./glf/nh.nix
+    ./glf/boot.nix
+    ./glf/time.nix
+    ./glf/users.nix
+    ./glf/gnome.nix
+    ./glf/nvidia.nix
+    ./glf/fstrim.nix
+    ./glf/gaming.nix
+    ./glf/montage.nix
+    ./glf/xserver.nix
+    ./glf/pipewire.nix
+    ./glf/configuration.nix
   ];
 }

@@ -1,6 +1,5 @@
 { pkgs, config, lib, ... }:
 {
-
   boot = {
     tmp.cleanOnBoot = true;
 

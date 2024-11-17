@@ -9,16 +9,21 @@
   };
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  # Paquets system
+  # Packages système
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  environment.systemPackages = with pkgs.gnomeExtensions; [
-    caffeine
-    appindicator
-    dash-to-dock
+  environment.systemPackages = with pkgs;[
+    vlc-bin
+    gnome.gnome-tweaks
+
+    # Extension
+    gnomeExtensions.caffeine
+    gnomeExtensions.gsconnect
+    gnomeExtensions.appindicator
+    gnomeExtensions.dash-to-dock
   ];
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  # Paquets exclues de l'instalation de gnome
+  # Paquets exclus de l'installation de GNOME
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   environment.gnome.excludePackages = with pkgs; [
     gnome.gnome-music
@@ -30,20 +35,31 @@
     gnome.iagno
     gnome.hitori
     gnome.atomix
-    gnome.simple-scan
     gnome.yelp
-    gnome.gnome-maps
-    gnome.gnome-clocks
-    gnome-connections
     gnome.geary
     xterm
     gnome-user-docs
-    gnome.gnome-calculator
-    gnome.cheese
     epiphany
     gnome.gnome-packagekit
     packagekit
-    system-config-printer
     gnome-tour
   ];
+
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # Paramètre GNOME
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  dconf.settings = {
+
+    "org/gnome/desktop/wm/preferences" = {
+      button-layout = "appmenu:minimize,maximize,close";
+      focus-mode = "click";
+      visual-bell = false;
+    };
+
+    "org/gnome/desktop/peripherals/touchpad" = {
+      click-method = "areas";
+      tap-to-click = true;
+      two-finger-scrolling-enabled = true;
+    };
+  };
 }

@@ -1,16 +1,18 @@
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# NE TOUCHEZ A RIEN
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 { config, lib, ... }:
 {
   options = {
     drivers.nvidia = lib.mkOption {
       type = lib.types.string;
-      default = "null";
     };
   };
 
   config = {
     services.xserver.videoDrivers =
       if config.options.drivers.nvidia == "laptop" then [ "nvidia" ]
-      else if config.options.drivers.nvidia == "Desktop" then [ "nvidia" ]
+      else if config.options.drivers.nvidia == "desktop" then [ "nvidia" ]
       else lib.mkDefault [ "modesetting" "fbdev" ];
 
     nixpkgs.config.nvidia.acceptLicense = if config.services.xserver.videoDrivers == [ "nvidia" ] then true else false;

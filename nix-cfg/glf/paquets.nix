@@ -15,7 +15,6 @@ in
   users.users.${username}.packages = with pkgs; [
 
     # APP
-    firefox-bin
     thunderbird-latest
 
     discord

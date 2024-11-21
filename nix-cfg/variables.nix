@@ -5,7 +5,6 @@
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # Vos configurations
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    kernel = "latest"; # lts, xanmod, zen, latest
     drivers.nvidia = "null"; # desktop, laptop
     montage-video = false; # true ou false
 
@@ -15,11 +14,7 @@
       amdgpuBusId = "";
       nvidiaBusId = "";
 
-      # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      # Vos Variables
-      # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      hostname = "nixy";
-      username = "hadi";
+      username = "test";
     };
   };
 }

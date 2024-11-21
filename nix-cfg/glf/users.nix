@@ -1,6 +1,6 @@
 { config, ... }:
 let
-  username = config.var.username;
+  username = "test";
 in
 {
   users.users.${username} = {

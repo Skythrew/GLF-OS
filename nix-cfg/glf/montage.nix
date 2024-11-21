@@ -3,6 +3,7 @@
   options = {
     montage-video = lib.mkOption {
       type = lib.types.bool;
+      default = false;
     };
   };
   config = {

@@ -1,6 +1,6 @@
 { pkgs, config, ... }:
 let
-  username = config.var.username;
+  username = "test";
 in
 {
   services.flatpak.enable = true;
@@ -20,9 +20,7 @@ in
     discord
     freetube
 
-    # Bureautique
-    libreoffice-fresh
-    hunspell
-    hunspellDicts.fr-moderne
+    # Bureautique  libreoffice-fresh hunspell hunspellDicts.fr-moderne
+
   ];
 } 

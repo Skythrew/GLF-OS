@@ -30,7 +30,6 @@
     gnome-tweaks
     gnome-software
 
-
     # Extension
     gnomeExtensions.caffeine
     gnomeExtensions.gsconnect

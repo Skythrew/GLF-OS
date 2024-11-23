@@ -10,18 +10,12 @@
   environment.systemPackages = with pkgs;[
     # APP
     discord
-    freetube
-    thunderbird-latest
 
     # Bureautique  
-    # libreoffice-bin
+    libreoffice-bin
     hunspell
     hunspellDicts.fr-moderne
 
     # Montage
-    obs-studio
-    kdePackages.kdenlive
-    gimp
-    inkscape
   ];
 } 

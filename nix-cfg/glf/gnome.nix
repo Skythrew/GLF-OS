@@ -10,14 +10,15 @@
       desktopManager.gnome.enable = true;
     };
   };
+
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # Packages système
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   programs.kdeconnect = {
     enable = true;
     package = pkgs.gnomeExtensions.gsconnect;
   };
 
-  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  # Packages système
-  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   environment.systemPackages = with pkgs;[
 
     # theme
@@ -40,8 +41,6 @@
   # Paquets exclus de l'installation de GNOME
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   environment.gnome.excludePackages = with pkgs; [
-    xterm
-    gnome-tour
     tali
     iagno
     hitori
@@ -49,11 +48,13 @@
     yelp
     geary
     xterm
-    gnome-user-docs
+
     epiphany
-    gnome-packagekit
+
     packagekit
     gnome-tour
+    gnome-user-docs
+    gnome-packagekit
   ];
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

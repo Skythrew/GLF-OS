@@ -81,9 +81,8 @@ Presentation
         Text {
             anchors.horizontalCenter: background2.horizontalCenter
             anchors.top: text2.bottom
-            text: "Nix makes it <b>trivial to share development and build<br/>"+
-                  "environments</b> for your projects, regardless of what<br/>"+
-                  "programming languages and tools you’re using."
+            text: "Based on NixOS, installing or upgrading one package cannot break other packages.<br/>"+
+                  "You can easily roll back to previous versions when you want."
             wrapMode: Text.WordWrap
             width: presentation.width
             horizontalAlignment: Text.Center
@@ -94,7 +93,7 @@ Presentation
         Text {
             id: text3
             anchors.centerIn: parent
-            text: "Reliable"
+            text: "Fast"
             font.pixelSize: 30
             wrapMode: Text.WordWrap
             width: presentation.width
@@ -114,7 +113,7 @@ Presentation
             anchors.top: text3.bottom
             text: "GLF OS is fast. Really.<br/>"+
                   "It has been designed from the beginning for optimal out-of-the-box performance.<br/>"+
-                  "We regularly run benchmarks to make sure it remains at the top for gaming.<br/>"
+                  "It was designed from the outset to deliver optimum performance straight out of the box."
             wrapMode: Text.WordWrap
             width: presentation.width
             horizontalAlignment: Text.Center

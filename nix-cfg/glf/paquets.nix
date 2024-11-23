@@ -1,7 +1,4 @@
-{ pkgs, config, ... }:
-let
-  username = config.var.username;
-in
+{ pkgs, ... }:
 {
   services.flatpak.enable = true;
   systemd.services.flatpak-repo = {
@@ -10,20 +7,21 @@ in
     script = ''flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo'';
   };
 
-  fonts.fontDir.enable = true;
-
-  users.users.${username}.packages = with pkgs; [
-
+  environment.systemPackages = with pkgs;[
     # APP
-    firefox-bin
-    thunderbird-latest
-
     discord
     freetube
+    thunderbird-latest
 
-    # Bureautique
-    libreoffice-fresh
+    # Bureautique  
+    # libreoffice-bin
     hunspell
     hunspellDicts.fr-moderne
+
+    # Montage
+    obs-studio
+    kdePackages.kdenlive
+    gimp
+    inkscape
   ];
 } 

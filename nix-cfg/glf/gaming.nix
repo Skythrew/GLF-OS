@@ -1,13 +1,5 @@
-{ pkgs, config, ... }:
-let
-  username = config.var.username;
-in
+{ pkgs, ... }:
 {
-  services.hardware.openrgb = {
-    enable = true;
-    # motherboard = "amd|intel"; 
-  };
-
   environment.systemPackages = with pkgs; [
     heroic
     lutris
@@ -15,7 +7,10 @@ in
     mangohud
   ];
 
-  hardware.steam-hardware.enable = true;
+  environment.sessionVariables = {
+    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
+    MANGOHUD_CONFIG = "horizontal,hud_no_margin,cpu_stats,ram,gpu_name,gpu_stats,vram,fps,frametime=0,frame_timing=0,time,time_format=%H\\:%M";
+  };
 
   services.udev.extraRules = ''
     # USB
@@ -25,6 +20,8 @@ in
     ATTRS{name}=="Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
     ATTRS{name}=="DualSense Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
   '';
+
+  hardware.steam-hardware.enable = true;
 
   programs = {
     steam = {

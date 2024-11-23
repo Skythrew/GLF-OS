@@ -23,16 +23,11 @@ _ = gettext.translation(
     fallback=True,
 ).gettext
 
-
 # The following strings contain pieces of a nix-configuration file.
 # They are adapted from the default config generated from the nixos-generate-config command.
 
-cfghead = """# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
+cfghead = """
 { config, pkgs, ... }:
-
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -118,6 +113,7 @@ cfglocaleextra = """  i18n.extraLocaleSettings = {
 
 cfggnome = """  # Enable the X11 windowing system.
   services.xserver.enable = true;
+  services.excludePackages = [ pkgs.xterm ];
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;

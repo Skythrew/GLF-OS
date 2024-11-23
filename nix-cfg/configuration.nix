@@ -8,24 +8,12 @@
     ./glf
   ];
 
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
+  users.users.test = {
+    isNormalUser = true;
+    description = "test";
+    extraGroups = [ "networkmanager" "wheel" "render" ];
   };
 
-  system.autoUpgrade = { enable = true; dates = "weekly"; };
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  nixpkgs = { config = { allowUnfree = true; }; };
-
-  nix = {
-    optimise = {
-      automatic = true;
-      dates = [ "daily" ];
-    };
-
-    settings = {
-      experimental-features = [ "nix-command" "flakes" ];
-      auto-optimise-store = true;
-    };
-  };
 }

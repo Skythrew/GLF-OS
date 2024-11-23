@@ -1,44 +1,22 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # NE TOUCHEZ A RIEN
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-{ config, lib, options, ... }:
+{ config, ... }:
 {
-  options = {
-    drivers.nvidia = lib.mkOption {
-      type = lib.types.string;
-    };
-  };
+  services.xserver.videoDrivers = [ "nvidia" ];
 
-  config = {
-    services.xserver.videoDrivers =
-      if options.drivers.nvidia == "laptop" then [ "nvidia" ]
-      else if options.drivers.nvidia == "desktop" then [ "nvidia" ]
-      else lib.mkDefault [ "modesetting" "fbdev" ];
+  nixpkgs.config.nvidia.acceptLicense = true;
 
-    nixpkgs.config.nvidia.acceptLicense = if config.services.xserver.videoDrivers == [ "nvidia" ] then true else false;
+  hardware.nvidia = {
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    open = false;
 
-    hardware = {
+    nvidiaSettings = true;
+    modesetting.enable = true;
+    dynamicBoost.enable = true;
 
-      nvidia = {
-        package = if config.services.xserver.videoDrivers == [ "nvidia" ] then config.boot.kernelPackages.nvidiaPackages.beta else null;
-        open = false;
-
-        nvidiaSettings = if config.services.xserver.videoDrivers == [ "nvidia" ] then true else false;
-        modesetting.enable = if config.services.xserver.videoDrivers == [ "nvidia" ] then true else false;
-        dynamicBoost.enable = if config.services.xserver.videoDrivers == [ "nvidia" ] then true else false;
-
-        powerManagement = {
-          enable = if config.services.xserver.videoDrivers == [ "nvidia" ] then true else false;
-        };
-
-        prime = {
-          sync.enable = if config.options.Activer.nvidia == "laptop" then true else false;
-
-          intelBusId = config.var.intelBusId;
-          amdgpuBusId = config.var.amdgpuBusId;
-          nvidiaBusId = config.var.nvidiaBusId;
-        };
-      };
+    powerManagement = {
+      enable = true;
     };
   };
 }

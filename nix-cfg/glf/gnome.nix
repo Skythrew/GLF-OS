@@ -19,7 +19,6 @@
   # Packages système
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   environment.systemPackages = with pkgs;[
-    vlc
 
     # theme
     adw-gtk3
@@ -41,11 +40,8 @@
   # Paquets exclus de l'installation de GNOME
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   environment.gnome.excludePackages = with pkgs; [
-    gnome-music
+    xterm
     gnome-tour
-    gnome-photos
-    gnome-weather
-    totem
     tali
     iagno
     hitori
@@ -119,8 +115,8 @@
             multi-monitor = true;
             show-mounts-network = true;
             always-center-icons = true;
-            dash-max-icon-size = lib.gvariant.mkInt32 32;
-            extend-height = true;
+            custom-theme-shrink = true;
+            dock-fixed = true;
           };
 
           "org/gnome/mutter" = {

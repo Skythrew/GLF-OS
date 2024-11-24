@@ -1,7 +1,8 @@
-{ pkgs, config, ... }:
+{ pkgs, config, lib, ... }:
 {
   boot = {
     tmp.cleanOnBoot = true;
+    supportedFilesystems.zfs = lib.mkForce false;
 
     kernelPackages = pkgs.linuxPackages_latest;
     #linuxPackages_zen 

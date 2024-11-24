@@ -6,7 +6,7 @@
 #   SPDX-License-Identifier: GPL-3.0-or-later
 #
 #   Calamares is Free Software: see the License-Identifier above.
-#
+# ------------------------------------------------------------------------------
 
 import libcalamares
 import os
@@ -23,14 +23,15 @@ _ = gettext.translation(
     fallback=True,
 ).gettext
 
-# The following strings contain pieces of a nix-configuration file.
-# They are adapted from the default config generated from the nixos-generate-config command.
+# ====================================================
+# Configuration.nix (Modified)
+# ====================================================
 
 cfghead = """
 { config, pkgs, ... }:
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [ # Include the results of the hardware scan + GLF modules
       ./hardware-configuration.nix
       ./glf
     ];
@@ -58,12 +59,11 @@ cfgbootgrubcrypt = """  # Setup keyfile
   boot.initrd.secrets = {
     "/boot/crypto_keyfile.bin" = null;
   };
-
   boot.loader.grub.enableCryptodisk = true;
 
 """
 
-cfgnetwork = """  networking.hostName = "@@hostname@@"; # Define your hostname.
+cfgnetwork = """  networking.hostName = "GLF-OS"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -113,7 +113,7 @@ cfglocaleextra = """  i18n.extraLocaleSettings = {
 
 cfggnome = """  # Enable the X11 windowing system.
   services.xserver.enable = true;
-  services.excludePackages = [ pkgs.xterm ];
+  services.xserver.excludePackages = [ pkgs.xterm ];
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
@@ -133,27 +133,30 @@ cfgconsole = """  # Configure console keymap
 
 """
 
-cfgmisc = """  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
+cfgmisc = """
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
+
+    jack.enable = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
 
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
+    alsa = {
+      enable = true;
+      support32Bit = true;
+    };
+
+    wireplumber.extraConfig = {
+      "10-disable-camera" = {
+        "wireplumber.profiles" = {
+          main = {
+            "monitor.libcamera" = "disabled";
+          };
+        };
+      };
+    };
   };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
 
 """
 
@@ -167,9 +170,7 @@ cfgusers = """  # Define a user account. Don't forget to set a password with ‘
 
 """
 
-cfgfirefox = """  # Install firefox.
-  programs.firefox.enable = true;
-
+cfgfirefox = """
 """
 
 cfgautologin = """  # Enable automatic login for the user.
@@ -194,44 +195,17 @@ cfgunfree = """  # Allow unfree packages
 
 """
 
-cfgpkgs = """  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
-  ];
+cfgpkgs = """
+  environment.systemPackages = with pkgs; [];
 
 """
 
-cfgtail = """  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "@@nixosversion@@"; # Did you read the comment?
-
+cfgtail = """  
+  system.stateVersion = "@@nixosversion@@"; # DO NOT TOUCH 
 }
 """
+
+
 def env_is_set(name):
     envValue = os.environ.get(name)
     return not (envValue is None or envValue == "")
@@ -680,10 +654,14 @@ def run():
     # Write the configuration.nix file
     libcalamares.utils.host_env_process_output(["cp", "/dev/stdin", config], None, cfg)
 
-    # Copying user provided configurations
+    # ====================================================
+    # GLF IMPORT
+    # ====================================================
+
     dynamic_config = "/tmp/nix-cfg/configuration.nix" # Generated by calamares
-    iso_config = "/iso/nix-cfg/configuration.nix"     # From glf (used for condition)
-    glf_module = "/iso/nix-cfg/glf"               # GLF Module
+    iso_config = "/iso/nix-cfg/configuration.nix"     # From GLF (used for condition)
+    glf_module = "/iso/nix-cfg/glf"                   # GLF Module
+
     hw_cfg_dest = os.path.join(root_mount_point, "etc/nixos/hardware-configuration.nix")
     hw_modified = False
 
@@ -691,6 +669,10 @@ def run():
     libcalamares.utils.host_env_process_output(["mkdir", "-p", tmpPath])
     libcalamares.utils.host_env_process_output(["chmod", "0755", tmpPath])
     libcalamares.utils.host_env_process_output(["sudo", "mount", "--bind", "/tmp", tmpPath])
+
+    # ====================================================
+    # Write and Install
+    # ====================================================
 
     try:
         with open(hw_cfg_dest, "r") as hf:

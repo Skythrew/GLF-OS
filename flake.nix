@@ -1,11 +1,13 @@
 {
-  inputs = { nixpkgs.url = "nixpkgs/release-24.11"; };
+  inputs = { nixpkgs.url = "nixpkgs/nixos-24.11"; };
 
-  outputs = { self, nixpkgs, ... } @ inputs:
-    let
-      system = "x86_64-linux";
+  outputs = { nixpkgs, ... } @ inputs:
+    let system = "x86_64-linux";
     in
-    rec {
+    rec
+    {
+      iso = nixosConfigurations."glf-installer".config.system.build.isoImage;
+
       nixosConfigurations = {
         "glf-installer" = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs; };
@@ -30,13 +32,12 @@
                       		      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/branding.desc}   $out/share/calamares/branding/nixos/branding.desc
 
                       		      cp -r ${./patches/calamares-nixos-extensions/config/modules/packagechooser.conf}   $out/share/calamares/modules/packagechooser.conf
-                      		      cp -r ${./patches/calamares-nixos-extensions/config/settings.conf}   $out/share/calamares/settings.conf
+                      		      cp -r ${./patches/calamares-nixos-extensions/config/settings.conf}                 $out/share/calamares/settings.conf
                     '';
                   });
                 })
               ];
             }
-
             ({ config, ... }: {
               isoImage = {
                 contents = [
@@ -53,7 +54,5 @@
           ];
         };
       };
-
-      iso = nixosConfigurations."glf-installer".config.system.build.isoImage;
     };
 }

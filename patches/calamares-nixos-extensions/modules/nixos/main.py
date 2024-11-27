@@ -77,16 +77,6 @@ cfgnetworkmanager = """  # Enable networking
 
 """
 
-cfgconnman = """  # Enable networking
-  services.connman.enable = true;
-
-"""
-
-cfgnmapplet = """  # Enable network manager applet
-  programs.nm-applet.enable = true;
-
-"""
-
 cfgtime = """  # Set your time zone.
   time.timeZone = "@@timezone@@";
 
@@ -135,43 +125,13 @@ cfgconsole = """  # Configure console keymap
 
 """
 
-cfgmisc = """
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-
-    jack.enable = true;
-    pulse.enable = true;
-
-    alsa = {
-      enable = true;
-      support32Bit = true;
-    };
-
-    wireplumber.extraConfig = {
-      "10-disable-camera" = {
-        "wireplumber.profiles" = {
-          main = {
-            "monitor.libcamera" = "disabled";
-          };
-        };
-      };
-    };
-  };
-
-"""
-
 cfgusers = """  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.@@username@@ = {
     isNormalUser = true;
     description = "@@fullname@@";
     extraGroups = [ @@groups@@ ];
-    packages = with pkgs; [@@pkgs@@];
   };
 
-"""
-
-cfgfirefox = """
 """
 
 cfgautologin = """  # Enable automatic login for the user.
@@ -191,20 +151,14 @@ cfgautologintty = """  # Enable automatic login for the user.
 
 """
 
-cfgunfree = """  
-
-"""
-
-cfgpkgs = """
-  environment.systemPackages = with pkgs; [];
-
-"""
-
 cfgtail = """  
   system.stateVersion = "@@nixosversion@@"; # DO NOT TOUCH 
 }
 """
 
+# =================================================
+# Required functions
+# =================================================
 
 def env_is_set(name):
     envValue = os.environ.get(name)
@@ -229,13 +183,10 @@ def generateProxyStrings():
 def pretty_name():
     return _("Installing GLF-OS.")
 
-
 status = pretty_name()
-
 
 def pretty_status_message():
     return status
-
 
 def catenate(d, key, *values):
     """
@@ -249,6 +200,9 @@ def catenate(d, key, *values):
 
     d[key] = "".join(values)
 
+# ==================================================================================================
+#                                       GLF-OS Install function
+# ==================================================================================================
 
 def run():
     """NixOS Configuration."""
@@ -272,7 +226,9 @@ def run():
         else gs.value("bootLoader")["installPath"]
     )
 
-    # Pick config parts and prepare substitution
+# ================================================================================
+# Bootloader
+# ================================================================================
 
     # Check bootloader
     if fw_type == "efi":
@@ -283,7 +239,10 @@ def run():
     else:
         cfg += cfgbootnone
 
-    # Setup encrypted swap devices. nixos-generate-config doesn't seem to notice them.
+# ================================================================================
+# Setup encrypted swap devices. nixos-generate-config doesn't seem to notice them.
+# ================================================================================
+
     for part in gs.value("partitions"):
         if (
             part["claimed"] is True
@@ -291,9 +250,7 @@ def run():
             and part["device"] is not None
             and part["fs"] == "linuxswap"
         ):
-            cfg += """  boot.initrd.luks.devices."{}".device = "/dev/disk/by-uuid/{}";\n""".format(
-                part["luksMapperName"], part["uuid"]
-            )
+            cfg += """  boot.initrd.luks.devices."{}".device = "/dev/disk/by-uuid/{}";\n""".format(part["luksMapperName"], part["uuid"])
 
     # Check partitions
     root_is_encrypted = False
@@ -398,27 +355,24 @@ def run():
                         ),
                     )
 
+# ================================================================================
+# Writing cfg modules to configuration.nix
+# ================================================================================
+
     status = _("Configuring NixOS")
     libcalamares.job.setprogress(0.18)
    
+    # Network
     cfg += cfgnetwork
-    if gs.value("packagechooser_packagechooser") == "enlightenment":
-        cfg += cfgconnman
-    else:
-        cfg += cfgnetworkmanager
+    cfg += cfgnetworkmanager
 
-    if (
-        (gs.value("packagechooser_packagechooser") == "mate")
-        | (gs.value("packagechooser_packagechooser") == "lxqt")
-        | (gs.value("packagechooser_packagechooser") == "lumina")
-    ):
-        cfg += cfgnmapplet
-
+    # Hostname
     if gs.value("hostname") is None:
-        catenate(variables, "hostname", "nixos")
+        catenate(variables, "hostname", "GLF-OS")
     else:
         catenate(variables, "hostname", gs.value("hostname"))
 
+    # Internationalisation properties
     if gs.value("locationRegion") is not None and gs.value("locationZone") is not None:
         cfg += cfgtime
         catenate(
@@ -428,7 +382,6 @@ def run():
             "/",
             gs.value("locationZone"),
         )
-
     if gs.value("localeConf") is not None:
         localeconf = gs.value("localeConf")
         locale = localeconf.pop("LANG").split("/")[0]
@@ -446,6 +399,7 @@ def run():
     if gs.value("packagechooser_packagechooser") == "gnome":
         cfg += cfggnome
 
+    # Keyboard layout settings
     if (
         gs.value("keyboardLayout") is not None
         and gs.value("keyboardVariant") is not None
@@ -472,9 +426,7 @@ def run():
                     )
                 )
         else:
-            kbdmodelmap = open(
-                "/run/current-system/sw/share/systemd/kbd-model-map", "r"
-            )
+            kbdmodelmap = open("/run/current-system/sw/share/systemd/kbd-model-map", "r")
             kbd = kbdmodelmap.readlines()
             out = []
             for line in kbd:
@@ -516,12 +468,7 @@ def run():
                         )
                     )
 
-    if (
-        gs.value("packagechooser_packagechooser") is not None
-        and gs.value("packagechooser_packagechooser") != ""
-    ):
-        cfg += cfgmisc
-
+    # Setup user
     if gs.value("username") is not None:
         fullname = gs.value("fullname")
         groups = ["networkmanager", "wheel"]
@@ -541,29 +488,7 @@ def run():
         elif gs.value("autoLoginUser") is not None:
             cfg += cfgautologintty
 
-    if gs.value("packagechooser_packagechooser") != "":
-        cfg += cfgfirefox
-
-    # Check if unfree packages are allowed
-    free = True
-    if gs.value("packagechooser_unfree") is not None:
-        if gs.value("packagechooser_unfree") == "unfree":
-            free = False
-            cfg += cfgunfree
-
-    cfg += cfgpkgs
-    # Use firefox as default as a graphical web browser, and add kate to plasma desktop
-    if gs.value("packagechooser_packagechooser") == "plasma5":
-        catenate(variables, "pkgs", "\n      kate\n    #  thunderbird\n    ")
-    elif gs.value("packagechooser_packagechooser") == "plasma6":
-        catenate(
-            variables, "pkgs", "\n      kdePackages.kate\n    #  thunderbird\n    "
-        )
-    elif gs.value("packagechooser_packagechooser") != "":
-        catenate(variables, "pkgs", "\n    #  thunderbird\n    ")
-    else:
-        catenate(variables, "pkgs", "")
-
+    # Set System version
     cfg += cfgtail
     version = ".".join(subprocess.getoutput(["nixos-version"]).split(".")[:2])[:5]
     catenate(variables, "nixosversion", version)
@@ -601,62 +526,13 @@ def run():
         if e.output is not None:
             libcalamares.utils.error(e.output.decode("utf8"))
         return (_("nixos-generate-config failed"), _(e.output.decode("utf8")))
-
-    # Check for unfree stuff in hardware-configuration.nix
-    hf = open(root_mount_point + "/etc/nixos/hardware-configuration.nix", "r")
-    htxt = hf.read()
-    search = re.search(r"boot\.extraModulePackages = \[ (.*) \];", htxt)
-
-    # Check if any extraModulePackages are defined, and remove if only free packages are allowed
-    if search is not None and free:
-        expkgs = search.group(1).split(" ")
-        for pkg in expkgs:
-            p = ".".join(pkg.split(".")[3:])
-            # Check package p is unfree
-            isunfree = subprocess.check_output(
-                [
-                    "nix-instantiate",
-                    "--eval",
-                    "--strict",
-                    "-E",
-                    "with import <nixpkgs> {{}}; pkgs.linuxKernel.packageAliases.linux_default.{}.meta.unfree".format(
-                        p
-                    ),
-                    "--json",
-                ],
-                stderr=subprocess.STDOUT,
-            )
-            if isunfree == b"true":
-                libcalamares.utils.warning(
-                    "{} is marked as unfree, removing from hardware-configuration.nix".format(
-                        p
-                    )
-                )
-                expkgs.remove(pkg)
-        hardwareout = re.sub(
-            r"boot\.extraModulePackages = \[ (.*) \];",
-            "boot.extraModulePackages = [ {}];".format(
-                "".join(map(lambda x: x + " ", expkgs))
-            ),
-            htxt,
-        )
-        # Write the hardware-configuration.nix file
-        libcalamares.utils.host_env_process_output(
-            [
-                "cp",
-                "/dev/stdin",
-                root_mount_point + "/etc/nixos/hardware-configuration.nix",
-            ],
-            None,
-            hardwareout,
-        )
-
+ 
     # Write the configuration.nix file
     libcalamares.utils.host_env_process_output(["cp", "/dev/stdin", config], None, cfg)
 
-    # ====================================================
+    # ========================================================================================
     # GLF IMPORT
-    # ====================================================
+    # ========================================================================================
 
     dynamic_config = "/tmp/nix-cfg/configuration.nix" # Generated by calamares
     iso_config = "/iso/nix-cfg/configuration.nix"     # From GLF (used for condition)
@@ -670,9 +546,9 @@ def run():
     libcalamares.utils.host_env_process_output(["chmod", "0755", tmpPath])
     libcalamares.utils.host_env_process_output(["sudo", "mount", "--bind", "/tmp", tmpPath])
 
-    # ====================================================
+    # ========================================================================================
     # Write and Install
-    # ====================================================
+    # ========================================================================================
 
     try:
         with open(hw_cfg_dest, "r") as hf:

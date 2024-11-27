@@ -6,8 +6,8 @@
   services = {
     udev.packages = [ pkgs.gnome-settings-daemon ];
     xserver = {
-      displayManager.gdm.enable = true;
-      desktopManager.gnome.enable = true;
+      displayManager.gdm.enable = lib.mkDefault true;
+      desktopManager.gnome.enable = lib.mkDefault true;
     };
   };
 
@@ -50,11 +50,14 @@
     xterm
 
     epiphany
-
     packagekit
+
     gnome-tour
+    gnome-software
+    gnome-contacts
     gnome-user-docs
     gnome-packagekit
+    gnome-font-viewer
   ];
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

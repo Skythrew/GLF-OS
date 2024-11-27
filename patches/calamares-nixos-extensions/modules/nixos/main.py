@@ -134,7 +134,6 @@ cfgconsole = """  # Configure console keymap
 """
 
 cfgmisc = """
-  # Enable sound with pipewire.
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -190,8 +189,7 @@ cfgautologintty = """  # Enable automatic login for the user.
 
 """
 
-cfgunfree = """  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+cfgunfree = """  
 
 """
 
@@ -227,7 +225,7 @@ def generateProxyStrings():
     return proxyEnv
 
 def pretty_name():
-    return _("Installing NixOS.")
+    return _("Installing GLF-OS.")
 
 
 status = pretty_name()
@@ -400,7 +398,7 @@ def run():
 
     status = _("Configuring NixOS")
     libcalamares.job.setprogress(0.18)
-
+   
     cfg += cfgnetwork
     if gs.value("packagechooser_packagechooser") == "enlightenment":
         cfg += cfgconnman

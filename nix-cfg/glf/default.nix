@@ -1,5 +1,6 @@
 {
   imports = [
+
     ./nh.nix
     ./boot.nix
     ./gnome.nix
@@ -9,6 +10,10 @@
     ./paquets.nix
 
     ./system.nix
+
+
+
+
     # ./nvidia.nix
   ];
 }

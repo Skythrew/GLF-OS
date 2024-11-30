@@ -39,6 +39,10 @@
             }
             ({ config, ... }: {
               isoImage = {
+                # change default partition name (cannot exceed 32 bytes)
+                # volumeID = nixpkgs.lib.mkDefault "glfos${nixpkgs.lib.optionalString (config.isoImage.edition != "") "-${config.isoImage.edition}"}-${config.system.nixos.release}";
+                volumeID = nixpkgs.lib.mkDefault "glfos-${config.system.nixos.version}";
+
                 includeSystemBuildDependencies = false;
                 storeContents = [ config.system.build.toplevel ];
                 squashfsCompression = "zstd -Xcompression-level 22";

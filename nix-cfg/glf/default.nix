@@ -1,5 +1,6 @@
 {
   imports = [
+    ./version.nix
     ./nh.nix
     ./boot.nix
     ./gnome.nix

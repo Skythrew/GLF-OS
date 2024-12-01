@@ -26,18 +26,24 @@ _ = gettext.translation(
 # ====================================================
 # Configuration.nix (Modified)
 # ====================================================
-
-cfghead = """
-{ config, pkgs, ... }:
+cfghead = """  { config, pkgs, lib, ... }:
 {
   imports =
     [ # Include the results of the hardware scan + GLF modules
       ./hardware-configuration.nix
       ./glf
-      @@has_nvidia@@./glf/nvidia.nix
     ];
 
 """
+
+cfg_nvidia = """  nvidia_config = {
+    enable = @@has_nvidia@@;
+    laptop = @@has_laptop@@;
+    prime = @@has_prime@@;
+@@prime_busids@@};
+
+"""
+
 cfgbootefi = """  # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -123,13 +129,6 @@ cfgkeymap = """  # Configure keymap in X11
 """
 cfgconsole = """  # Configure console keymap
   console.keyMap = "@@vconsole@@";
-
-"""
-
-cfgprime = """  # Configure nvidia prime
-  hardware.nvidia.prime = {
-@@prime_busids@@
-  };
 
 """
 
@@ -242,6 +241,12 @@ def has_nvidia_device(vga_devices):
             return True
     return False
 
+def has_nvidia_laptop(vga_devices):
+    for pci_address, description in vga_devices:
+        dev_desc = description.lower()
+        if "nvidia" in dev_desc and ("laptop" in dev_desc or "mobile" in dev_desc):
+            return True
+    return False
 
 def generate_prime_entries(vga_devices):
     output_lines = ""
@@ -272,13 +277,16 @@ def run():
     gs = libcalamares.globalstorage
     variables = dict()
 
-
-    # Check if nvidia import is needed otherwise comment the import
+    # Nvidia support
+    cfg += cfg_nvidia
     vga_devices = get_vga_devices()
     has_nvidia = has_nvidia_device(vga_devices)
-    if has_nvidia == False:
-        catenate(variables, "has_nvidia", "# " )
-
+    has_laptop = has_nvidia_laptop(vga_devices)
+    has_prime = (has_laptop and len(vga_devices) > 1)
+    catenate(variables, "has_nvidia", f"{has_nvidia}".lower() )
+    catenate(variables, "has_laptop", f"{has_laptop}".lower() )
+    catenate(variables, "has_prime", f"{has_prime}".lower() )
+    catenate(variables, "prime_busids", generate_prime_entries(vga_devices) )
 
     # Setup variables
     root_mount_point = gs.value("rootMountPoint")
@@ -531,17 +539,6 @@ def run():
                             gs.value("keyboardVConsoleKeymap")
                         )
                     )
-
-    # Configure nvidia prime if needed
-    # if we have more than one GPU and one of them is nvidia then assume it is laptop (NOTE: valid criteria?)
-    # Inverted logic for debugging (comment out the bloc when useless)
-    # if has_nvidia and len(vga_devices) > 1:
-    if has_nvidia == False or len(vga_devices) < 2:
-        cfg += "/*\n"
-    cfg += cfgprime
-    catenate(variables, "prime_busids", generate_prime_entries(vga_devices) )
-    if has_nvidia == False or len(vga_devices) < 2:
-        cfg += "*/\n"
 
     # Setup user
     if gs.value("username") is not None:

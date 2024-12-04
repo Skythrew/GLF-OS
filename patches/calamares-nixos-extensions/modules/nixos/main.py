@@ -37,10 +37,9 @@ cfghead = """  { config, pkgs, lib, ... }:
 """
 
 cfg_nvidia = """  nvidia_config = {
-    enable = @@has_nvidia@@;
+    enable = true;
     laptop = @@has_laptop@@;
-    prime = @@has_prime@@;
-@@prime_busids@@};
+@@prime_busids@@  };
 
 """
 
@@ -278,15 +277,13 @@ def run():
     variables = dict()
 
     # Nvidia support
-    cfg += cfg_nvidia
     vga_devices = get_vga_devices()
     has_nvidia = has_nvidia_device(vga_devices)
-    has_laptop = has_nvidia_laptop(vga_devices)
-    has_prime = (has_laptop and len(vga_devices) > 1)
-    catenate(variables, "has_nvidia", f"{has_nvidia}".lower() )
-    catenate(variables, "has_laptop", f"{has_laptop}".lower() )
-    catenate(variables, "has_prime", f"{has_prime}".lower() )
-    catenate(variables, "prime_busids", generate_prime_entries(vga_devices) )
+    if has_nvidia == True:
+        cfg += cfg_nvidia
+        has_laptop = has_nvidia_laptop(vga_devices)
+        catenate(variables, "has_laptop", f"{has_laptop}".lower() )
+        catenate(variables, "prime_busids", generate_prime_entries(vga_devices) )
 
     # Setup variables
     root_mount_point = gs.value("rootMountPoint")

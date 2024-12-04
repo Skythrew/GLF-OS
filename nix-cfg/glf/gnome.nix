@@ -114,13 +114,14 @@
 
           "org/gnome/shell/extensions/dash-to-dock" = {
             click-action = "minimize-or-overview";
+            disable-overview-on-startup = true;
             dock-position = "BOTTOM";
+            running-indicator-style = "DOTS";
             isolate-monitor = false;
             multi-monitor = true;
             show-mounts-network = true;
             always-center-icons = true;
             custom-theme-shrink = true;
-            dock-fixed = true;
           };
 
           "org/gnome/mutter" = {

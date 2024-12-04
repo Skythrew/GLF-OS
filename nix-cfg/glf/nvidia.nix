@@ -19,11 +19,6 @@ in
       default = false;
       description = "Enable nvidia laptop management";
     };
-    prime = mkOption {
-      type = with types; bool;
-      default = false;
-      description = "Enable nvidia prime";
-    };
     intelBusId = mkOption {
       type = with types; nullOr str;
       default = null;
@@ -51,7 +46,7 @@ in
       nvidiaSettings = true;
       modesetting.enable = true;
 
-      prime = optionalAttrs (cfg.prime) {
+      prime = {
         intelBusId = optionalAttrs (cfg.intelBusId != null) cfg.intelBusId;
         nvidiaBusId = optionalAttrs (cfg.nvidiaBusId != null) cfg.nvidiaBusId;
         amdgpuBusId = optionalAttrs (cfg.amdgpuBusId != null) cfg.amdgpuBusId;

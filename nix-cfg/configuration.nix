@@ -1,12 +1,11 @@
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# NE TOUCHEZ A RIEN
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+{ config, pkgs, lib, ... }:
 {
-  # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  # NE TOUCHEZ A RIEN
-  # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
   imports = [
     ./hardware-configuration.nix
     ./glf
-    ./glf/nvidia.nix
   ];
 
   users.users.test = {
@@ -14,6 +13,8 @@
     description = "test";
     extraGroups = [ "networkmanager" "wheel" "render" ];
   };
+
+  nvidia_config.enable = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 

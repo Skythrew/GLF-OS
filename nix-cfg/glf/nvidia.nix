@@ -1,22 +1,59 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # DO NOT TOUCH
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-{ config, ... }:
+{ config, lib, ... }:
+with lib;
+let
+  cfg = config.nvidia_config;
+in
 {
-  services.xserver.videoDrivers = [ "nvidia" ];
+  # declare option 
+  options.nvidia_config = {
+    enable = mkOption {
+      type = with types; bool;
+      default = false;
+      description = "Enable nvidia support";
+    };
+    laptop = mkOption {
+      type = with types; bool;
+      default = false;
+      description = "Enable nvidia laptop management";
+    };
+    intelBusId = mkOption {
+      type = with types; nullOr str;
+      default = null;
+    };
+    nvidiaBusId = mkOption {
+      type = with types; nullOr str;
+      default = null;
+    };
+    amdgpuBusId = mkOption {
+      type = with types; nullOr str;
+      default = null;
+    };
+  };
 
-  nixpkgs.config.nvidia.acceptLicense = true;
+  # nvidia configuration
+  config = mkIf cfg.enable {
+    services.xserver.videoDrivers = [ "nvidia" ];
 
-  hardware.nvidia = {
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
-    open = false;
+    nixpkgs.config.nvidia.acceptLicense = true;
 
-    nvidiaSettings = true;
-    modesetting.enable = true;
-    dynamicBoost.enable = true;
+    hardware.nvidia = {
+      package = config.boot.kernelPackages.nvidiaPackages.beta;
+      open = false;
 
-    powerManagement = {
-      enable = true;
+      nvidiaSettings = true;
+      modesetting.enable = true;
+
+      prime = {
+        intelBusId = optionalAttrs (cfg.intelBusId != null) cfg.intelBusId;
+        nvidiaBusId = optionalAttrs (cfg.nvidiaBusId != null) cfg.nvidiaBusId;
+        amdgpuBusId = optionalAttrs (cfg.amdgpuBusId != null) cfg.amdgpuBusId;
+      };
+      
+      dynamicBoost.enable = cfg.laptop;
+      powerManagement.enable = cfg.laptop;
     };
   };
 }

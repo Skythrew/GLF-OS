@@ -1,13 +1,16 @@
 # make without argument will perform a iso & install
 all: iso install
 
-# Test the configuration only
-test:
-	nixos-rebuild dry-build -I nixos-config=nix-cfg/configuration.nix
+# Check configuration only without build
+check: 
+	nix --extra-experimental-features "nix-command flakes" flake check --no-build
+# Check configuration only with build
+build:
+	nix --extra-experimental-features "nix-command flakes" build -L .#nixosConfigurations.glf-installer.config.system.build.toplevel
 
 # Build new iso
 iso:
-	nix --extra-experimental-features "nix-command flakes" build .#iso
+	nix --extra-experimental-features "nix-command flakes" build -L .#iso
 
 # Update flake.lock
 update:

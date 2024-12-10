@@ -10,6 +10,7 @@
       desktopManager.gnome.enable = lib.mkDefault true;
     };
   };
+  documentation.nixos.enable = false;
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Packages système

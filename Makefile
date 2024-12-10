@@ -12,6 +12,9 @@ build:
 iso:
 	nix --extra-experimental-features "nix-command flakes" build -L .#iso
 
+build-vm:
+	nixos-rebuild build-vm -I nixos-config=./nix-cfg/configuration.nix && ./result/bin/run-glfos-vm 
+
 # Update flake.lock
 update:
 	nix --extra-experimental-features "nix-command flakes" flake update

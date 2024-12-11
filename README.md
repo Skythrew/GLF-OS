@@ -1,4 +1,3 @@
-
 # Construction de l'ISO
 
 Pour construire l'ISO, suivez les étapes ci-dessous :
@@ -10,9 +9,8 @@ Pour construire l'ISO, suivez les étapes ci-dessous :
 
 2. **Exécutez la commande de construction** :
    ```sh
-   nix build .#iso --impure
+   nix build .#iso 
    ```
-
 
 # Alternative (via utilisation de make)
 
@@ -48,21 +46,26 @@ Cette commande effacera tout ce qui a été généré localement, ISOs inclus.
 
 3. **Test de la configuration nix** : 
 
-> [!WARNING]  
-> en cours de développement
+Deux méthodes ici, la première permet de tester la configuration sans "build" et de repérer les erreurs de syntaxes.
 
-Cette commande peut être utilisée pour pour pré-tester la configuration nix présente dans le répertoire `nix-cfg`.  
-   ```
-   make test
-   ```
+```bash
+make check
+```
 
-Elle n'est toutefois pas encore totalement fonctionnelle du fait que la configuration est incomplète.  
-L'erreur suivante sera donc produite: 
-   ```
-       error:
-       Failed assertions:
-       - The ‘fileSystems’ option does not specify your root file system.
-       - You must set the option ‘boot.loader.grub.devices’ or 'boot.loader.grub.mirroredBoots' to make the system bootable.
-make: *** [Makefile:6: test] Error 1
-   ```
-Un patch de la configuration sera sûrement nécessaire à terme pour terminer sans erreur.  
+> [!NOTE]
+> Les fichiers vérifiés sont ceux qui sont appelés par le flocon (ex: le répertoire glf)
+> Tant que votre fichier est appelé par le flocon, configuration.nix ou un default.nix, le fichier sera vérifié.
+
+La seconde méthode vérifie la syntaxe et construit la configuration sans générer d'iso (la configuration est mise en cache).
+
+```bash 
+make build
+```
+
+4. **Test de la configuration dans une machine virtuelle** :
+
+La configuration peut-être construite et lancé dans une machine virtuelle (depuis nixos uniquement)
+
+```bash
+make build-vm
+```

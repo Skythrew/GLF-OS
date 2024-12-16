@@ -15,6 +15,7 @@
     # APP
     discord
     celluloid
+    chromium
     
     # Fetch en attendant GLF-FETCH
     fastfetch

@@ -49,6 +49,7 @@
     yelp
     geary
     xterm
+    totem
 
     epiphany
     packagekit

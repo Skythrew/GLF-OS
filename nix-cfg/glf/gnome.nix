@@ -29,7 +29,7 @@
 
     # gnome
     gnome-tweaks
-    gnome-software
+    
 
     # Extension
     gnomeExtensions.caffeine

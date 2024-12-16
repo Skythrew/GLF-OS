@@ -14,7 +14,8 @@
   environment.systemPackages = with pkgs;[
     # APP
     discord
-
+    celluloid
+    
     # Fetch en attendant GLF-FETCH
     fastfetch
 

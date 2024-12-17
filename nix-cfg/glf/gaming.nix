@@ -3,7 +3,6 @@
   environment.systemPackages = with pkgs; [
     heroic
     lutris
-    goverlay
     mangohud
   ];
 
@@ -26,7 +25,7 @@
   programs = {
     steam = {
       enable = true;
-      package = pkgs.steam.override { extraEnv = { MANGOHUD = true; OBS_VKCAPTURE = true; }; };
+      package = pkgs.steam.override { extraEnv = { MANGOHUD = false; OBS_VKCAPTURE = true; }; };
       extest.enable = true;
       remotePlay.openFirewall = true;
       localNetworkGameTransfers.openFirewall = true;

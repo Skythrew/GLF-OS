@@ -34,7 +34,7 @@ in
   systemd.services.update-glf-config = {
     description = "Update GLF module from git";
     serviceConfig = {
-      ExecStart = "${pkgs.bash}/bin/bash /usr/local/bin/update-glf-config.sh";
+      ExecStart = "${pkgs.bash}/bin/bash /etc/update-glf-config.sh";
     };
     wantedBy = [ "multi-user.target" ];
   };

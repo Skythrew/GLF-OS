@@ -11,5 +11,6 @@
     ./pipewire.nix
     ./nvidia.nix
     ./system.nix
+    ./updateConf.nix
   ];
 }

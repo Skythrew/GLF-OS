@@ -11,7 +11,7 @@ let
     REPO_URL="https://github.com/GLF-OS/Nixos-by-GLF.git"
 
     # Branche et chemin à extraire
-    BRANCH="dev"
+    BRANCH="main"
     SUBDIR="nix-cfg/glf"
 
     # Répertoire cible

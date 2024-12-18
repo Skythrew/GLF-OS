@@ -16,6 +16,9 @@
     discord
     celluloid
     chromium
+    pciutils
+    usbutils
+    git
     
     # Fetch en attendant GLF-FETCH
     fastfetch

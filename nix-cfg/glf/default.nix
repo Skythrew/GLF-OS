@@ -12,5 +12,6 @@
     ./nvidia.nix
     ./system.nix
     ./updateConf.nix
+    ./imprimante.nix
   ];
 }

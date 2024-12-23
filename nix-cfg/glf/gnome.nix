@@ -1,15 +1,25 @@
 { pkgs, lib, ... }:
 {
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  # Activation de Gnome
+  # Activation de GNOME
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   services = {
     udev.packages = [ pkgs.gnome-settings-daemon ];
     xserver = {
       displayManager.gdm.enable = lib.mkDefault true;
-      desktopManager.gnome.enable = lib.mkDefault true;
+      desktopManager.gnome = {
+        enable = lib.mkDefault true;
+
+        # Activation du Fractional Scaling
+        extraGSettingsOverridePackages = [ pkgs.mutter ];
+        extraGSettingsOverrides = ''
+          [org.gnome.mutter]
+          experimental-features=['scale-monitor-framebuffer']
+        '';
+      };
     };
   };
+
   documentation.nixos.enable = false;
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -20,7 +30,7 @@
     package = pkgs.gnomeExtensions.gsconnect;
   };
 
-  environment.systemPackages = with pkgs;[
+  environment.systemPackages = with pkgs; [
 
     # theme
     adw-gtk3
@@ -29,7 +39,6 @@
 
     # gnome
     gnome-tweaks
-    
 
     # Extension
     gnomeExtensions.caffeine
@@ -63,7 +72,7 @@
   ];
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  # Paramètre GNOME
+  # Paramètres GNOME
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   programs.dconf = {
     enable = true;

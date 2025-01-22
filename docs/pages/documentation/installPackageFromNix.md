@@ -49,7 +49,7 @@ imports = [
 Enfin, appliquez la configuration avec : 
 
 ```bash
-sudo nixos-rebuild switch
+glf-switch
 ```
 
 

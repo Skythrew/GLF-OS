@@ -7,3 +7,4 @@ result
 *.qcow2
 iso
 __pycache__/
+./docs/_site

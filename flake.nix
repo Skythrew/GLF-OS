@@ -1,8 +1,13 @@
 {
-  inputs = { nixpkgs.url = "nixpkgs/nixos-24.11"; };
+  inputs = {
+    nixpkgs.url = "nixpkgs/nixos-24.11";
+    utils.url   = "github:numtide/flake-utils";
+  };
 
-  outputs = { nixpkgs, ... } @ inputs:
-    let system = "x86_64-linux";
+  outputs = { self, nixpkgs, utils, ... } @ inputs:
+    let
+      # Architecture for GLF-OS system
+      nixosSystem = "x86_64-linux";
     in
     rec
     {
@@ -10,7 +15,8 @@
 
       nixosConfigurations = {
         "glf-installer" = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs; }; inherit system;
+          specialArgs = { inherit inputs; };
+	  system = nixosSystem;
 
           modules = [
             "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix"
@@ -55,5 +61,27 @@
           ];
         };
       };
-    };
+
+      # Development shells for multiple systems
+    } // utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = import nixpkgs { inherit system; };
+      in
+      {
+        devShells = {
+          # Default development shell
+          default = pkgs.mkShell {
+            buildInputs = [
+              pkgs.ruby
+              pkgs.bundler
+            ];
+            shellHook = ''
+              cd docs || exit 1
+              echo "Running bundle install and starting Jekyll server..."
+              bundle install && bundle exec jekyll serve
+            '';
+          };
+        };
+      }
+  );
 }

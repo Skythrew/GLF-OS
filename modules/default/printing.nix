@@ -1,48 +1,72 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 {
-
   options.glf.printing.enable = lib.mkOption {
     description = "Enable GLF printing configurations.";
     type = lib.types.bool;
     default = true;
   };
 
-  config = lib.mkIf config.glf.printing.enable (let
-    allUsers = builtins.attrNames config.users.users;
-    normalUsers = builtins.filter (user: config.users.users.${user}.isNormalUser == true) allUsers;
-  in {
-    # Configure printer
-    services.printing = {
-      enable = true;
-      startWhenNeeded = true;
-      drivers = with pkgs; [
-        gutenprint
-        hplip
-        samsung-unified-linux-driver
-        splix
-        brlaser
-        brgenml1lpr
-        cnijfilter2
+  config = lib.mkIf config.glf.printing.enable (
+    let
+      allUsers = builtins.attrNames config.users.users;
+      normalUsers = builtins.filter (user: config.users.users.${user}.isNormalUser) allUsers;
+    in
+    {
+      nixpkgs.config.allowUnfree = lib.mkForce true;
+
+      # Configure printer
+      services.printing = {
+        enable = true;
+        startWhenNeeded = true;
+        drivers = with pkgs; [
+          brgenml1cupswrapper
+          brgenml1lpr
+          brlaser
+          cnijfilter2
+          epkowa
+          gutenprint
+          gutenprintBin
+          hplip
+          hplipWithPlugin
+          samsung-unified-linux-driver
+          splix
+        ];
+      };
+
+      # To install printers manually
+      programs.system-config-printer.enable = true;
+
+      # Enable autodiscovery
+      services.avahi = {
+        enable = true;
+        nssmdns4 = true;
+        openFirewall = true;
+      };
+
+      # systemd.services.cups-browsed.enable = false;
+      hardware.sane = {
+        enable = true;
+        extraBackends = with pkgs; [
+          hplipWithPlugin
+          sane-airscan
+          epkowa
+          utsushi
+        ];
+      };
+      services.udev.packages = with pkgs; [
+        sane-airscan
+        utsushi
       ];
-    };
 
-    # Enable autodiscovery
-    services.avahi = {
-      enable = true;
-      nssmdns4 = true;
-      openFirewall = true;
-    };
-
-    # Scanner support
-    hardware.sane = {
-      enable = true;
-      extraBackends = with pkgs; [ sane-airscan epkowa ];
-    };
-
-    # Add all users to group scanner and lp
-    users.groups.scanner.members = normalUsers;
-    users.groups.lp.members = normalUsers;
-  });
-
+      # add all users to group scanner and lp
+      users.groups.scanner.members = normalUsers;
+      users.groups.lp.members = normalUsers;
+    }
+  );
 }

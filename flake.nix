@@ -15,19 +15,25 @@
       nixosModules = {
         default = import ./modules/default;
       };
+
+      baseModules = [
+        nixosModules.default
+        { nixpkgs.config = nixpkgsConfig; }
+      ];
+
     in
     {
       iso = self.nixosConfigurations."glf-installer".config.system.build.isoImage;
+      
       nixosConfigurations = {
+        # Configuration pour l'ISO d'installation avec Calamares
         "glf-installer" = nixpkgs.lib.nixosSystem {
           inherit system;
-          modules = [
+          modules = baseModules ++ [
             "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix"
             "${nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
-            nixosModules.default
             ./iso-cfg/configuration.nix
             {
-              nixpkgs.config = nixpkgsConfig;
               nixpkgs.overlays = [
                 (self: super: {
                   calamares-nixos-extensions = super.calamares-nixos-extensions.overrideAttrs (oldAttrs: {
@@ -64,7 +70,27 @@
             })
           ];
         };
+
+        # Configuration de test utilisateur simulée
+        "user-test" = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = baseModules ++ [
+            {
+              boot.loader.grub = {
+                enable = true;
+                device = "/dev/sda";
+                useOSProber = true;
+              };
+
+              fileSystems."/" = {
+                device = "/dev/sda1";
+                fsType = "ext4";
+              };
+            }
+          ];
+        };
       };
+
       nixosModules = nixosModules;
     } // utils.lib.eachDefaultSystem (system: 
       let

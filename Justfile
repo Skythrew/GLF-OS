@@ -1,10 +1,15 @@
-# make without argument will perform a iso & install
+# Justfile help
+_default:
+	@just --list
+
+# Perform a iso & install
 all: iso install
 
-# Check configuration only without build
-check: 
+# Check configuration (nix flake check)
+check:
 	nix --extra-experimental-features "nix-command flakes" flake check --no-build
-# Check configuration only with build
+
+# Build configuration (nix build)
 build:
 	nix --extra-experimental-features "nix-command flakes" build -L .#nixosConfigurations.glf-installer.config.system.build.toplevel
 
@@ -12,25 +17,28 @@ build:
 iso:
 	nix --extra-experimental-features "nix-command flakes" build -L .#iso
 
+# Build and run glf-os virtual machine
 build-vm:
-	nixos-rebuild build-vm -I nixos-config=./iso-cfg/configuration.nix && ./result/bin/run-glfos-vm 
+	nixos-rebuild build-vm -I nixos-config=./iso-cfg/configuration.nix && ./result/bin/run-glfos-vm
 
-# Update flake.lock
+# Update packages (flake.lock)
 update:
 	nix --extra-experimental-features "nix-command flakes" flake update
 
-# Clean local build
+# Clean local build (nix-collect-garbage)
 clean:
-	@if [ -L "result" ]; then rm result; fi
+	#!/usr/bin/env bash
+	if [ -L "result" ]; then rm result; fi
 	nix-collect-garbage
-	@if [ -d "iso" ]; then rm -r iso; fi
+	if [ -d "iso" ]; then rm -r iso; fi
 
 # Copy image and compute sha256sum
-SRC_DIR = result/iso
-DEST_DIR = iso
-GIT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 install:
-	@SRC_IMG=$$(ls -t $(SRC_DIR) | tail -1); \
+	#!/usr/bin/env bash
+	SRC_DIR := result/iso
+	DEST_DIR := iso
+	GIT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
+	SRC_IMG=$$(ls -t $(SRC_DIR) | tail -1); \
 	DST_IMG="$${SRC_IMG/-x86_64-linux.iso/_$(GIT_BRANCH).iso}"; \
 	if [ -n "$$SRC_IMG" ]; then \
 		echo "Copying $(SRC_DIR)/$$SRC_IMG to $(DEST_DIR)/$$DST_IMG ..."; \
@@ -41,4 +49,9 @@ install:
 		cat "$$DST_IMG.sha256sum"; \
 	fi
 
-.PHONY: all test clean iso update install
+# Check, fix and format nix code
+fix:
+	#!/usr/bin/env bash
+	find . -name "*.nix" -exec deadnix -eq {} \;
+	find . -name "*.nix" -exec nixfmt -s {} \;
+	statix check .

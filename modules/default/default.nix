@@ -17,5 +17,5 @@
     ./update.nix
     ./version.nix
   ];
-  
+
 }

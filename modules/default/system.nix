@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, ... }:
 
 {
 
@@ -40,14 +40,14 @@
 
     nix = {
       optimise = {
-	automatic = true;
-	dates = [ "weekly" ];
+        automatic = true;
+        dates = [ "weekly" ];
       };
       settings = {
-	auto-optimise-store = true;
+        auto-optimise-store = true;
       };
     };
-    
+
   };
 
 }

@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 {
   options.glf.autoUpgrade = lib.mkOption {
@@ -9,8 +14,11 @@
 
   config = lib.mkIf config.glf.autoUpgrade {
 
-    environment.systemPackages = with pkgs; [ coreutils gawk ];
-    
+    environment.systemPackages = with pkgs; [
+      coreutils
+      gawk
+    ];
+
     environment.etc."glfos/update.sh" = {
       text = ''
         #!${pkgs.bash}/bin/bash
@@ -67,7 +75,10 @@
         requires = [ "network-online.target" ];
         serviceConfig = {
           Type = "oneshot";
-          ExecStart = [ "${pkgs.bash}/bin/bash" "/etc/glfos/update.sh" ];
+          ExecStart = [
+            "${pkgs.bash}/bin/bash"
+            "/etc/glfos/update.sh"
+          ];
         };
       };
       timers."glfos-update" = {
@@ -75,7 +86,7 @@
         wantedBy = [ "timers.target" ];
         timerConfig = {
           OnBootSec = "5min";
-	  OnUnitActiveSec = "12h";
+          OnUnitActiveSec = "12h";
           Persistent = true;
         };
       };

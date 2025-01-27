@@ -4,7 +4,7 @@ let
   cfg = config.glf.nvidia_config;
 in
 {
-  # declare option 
+  # declare option
   options.glf.nvidia_config = {
     enable = mkOption {
       type = with types; bool;
@@ -46,7 +46,7 @@ in
         nvidiaBusId = optionalAttrs (cfg.nvidiaBusId != null) cfg.nvidiaBusId;
         amdgpuBusId = optionalAttrs (cfg.amdgpuBusId != null) cfg.amdgpuBusId;
       };
-      
+
       dynamicBoost.enable = cfg.laptop;
       powerManagement.enable = cfg.laptop;
     };

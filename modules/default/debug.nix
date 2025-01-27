@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, ... }:
 
 {
 
@@ -11,7 +11,7 @@
   config = lib.mkIf config.glf.debug.enable {
 
     # Add here your debug configuration
-    
+
   };
 
 }

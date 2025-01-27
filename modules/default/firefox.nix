@@ -1,4 +1,4 @@
-{ inputs, lib, config, pkgs, ... }:
+{ lib, config, ... }:
 
 {
 
@@ -13,10 +13,13 @@
     programs.firefox = {
       enable = true;
       wrapperConfig.pipewireSupport = true;
-      languagePacks = [ "fr" "en-US" ];
+      languagePacks = [
+        "fr"
+        "en-US"
+      ];
       preferences = {
-	"intl.accept_languages" = "fr-fr,en-us,en";
-	"intl.locale.requested" = "fr,en-US";
+        "intl.accept_languages" = "fr-fr,en-us,en";
+        "intl.locale.requested" = "fr,en-US";
       };
     };
 

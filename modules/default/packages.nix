@@ -21,6 +21,12 @@
       '';
     };
 
+    # Enable AppImage
+    programs.appimage = {
+      enable = true;
+      binfmt = true;
+    };
+
     environment.systemPackages = with pkgs;[
       # APP
       discord

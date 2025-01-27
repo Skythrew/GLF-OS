@@ -107,7 +107,9 @@
           shellHook = ''
             cd docs || exit 1
             echo "Running bundle install and starting Jekyll server..."
-            bundle install && bundle exec jekyll serve
+            bundle config set path 'vendor/bundle'
+            bundle install
+            bundle exec jekyll serve
           '';
         };
       }

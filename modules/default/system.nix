@@ -15,6 +15,13 @@
       enable32Bit = true;
     };
 
+    zramSwap = {
+      enable = false;
+      algorithm = "zstd";
+      memoryPercent = 25;
+      priority = 5;
+    };
+
     nix = {
       optimise = {
 	automatic = true;

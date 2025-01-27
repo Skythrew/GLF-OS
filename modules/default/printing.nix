@@ -18,7 +18,6 @@
       normalUsers = builtins.filter (user: config.users.users.${user}.isNormalUser) allUsers;
     in
     {
-      nixpkgs.config.allowUnfree = lib.mkForce true;
 
       # Configure printer
       services.printing = {

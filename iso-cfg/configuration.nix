@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, lib, ... }:
+{ pkgs, lib, ... }:
 
 {
 
@@ -17,11 +17,18 @@
 
   users.users.nixos = {
     isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" "render" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "render"
+    ];
   };
 
   networking.hostName = "GLF-OS";
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
 }

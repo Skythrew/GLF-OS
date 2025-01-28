@@ -16,7 +16,7 @@ Le dépôt est structuré des éléments principaux suivant :
 .
 ├── flake.nix
 ├── flake.lock
-├── Makefile
+├── Justfile
 ├── patches/
 │   └── calamares-nixos-extensions/
 │       ├── branding/
@@ -44,9 +44,9 @@ Le dépôt est structuré des éléments principaux suivant :
 |----------------|-------------------------------------------------------------------------------------------------------------------------|
 | **flake.nix**  | Décrit comment générer une image iso.                                                                                   |
 | **flake.lock** | Verrou de version de nixpkgs.                                                                                           |
-| **Makefile**   | Contient des commandes pour automatiser les tests de la configuration, génération d'image iso.                          |
+| **Justfile**   | Contient des commandes pour automatiser les tests de la configuration, génération d'image iso.                          |
 | **patches**    | Contient des modifications pour calamares permettant d'inclure des configurations personnalisées durant l'installation. |
-| **iso**    | Contient les configurations propres à l'image iso et des configurations ajoutées durant l'installation.                 |
+| **iso**        | Contient les configurations propres à l'image iso et des configurations ajoutées durant l'installation.                 |
 | **modules**    | Contient l'ensemble des modules **GLF**                                                                                 |
 | **assets**     | C'est ici que sont conservés les assets comme les wallpapers ou icons.                                                  |
 

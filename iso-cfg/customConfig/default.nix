@@ -1,7 +1,12 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 {
 
-  # Add your custom configuration here ↓ 
-  
+  # Add your custom configuration here ↓
+
 }

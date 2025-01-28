@@ -11,10 +11,10 @@
   config = lib.mkIf config.glf.fstrim.enable {
 
     services.fstrim = {
-	enable = true;
-	interval = "daily";
+      enable = true;
+      interval = "daily";
     };
-    
+
   };
 
 }

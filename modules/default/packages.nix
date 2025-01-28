@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 {
 
@@ -17,7 +22,7 @@
       after = [ "network-online.target" ];
       path = [ pkgs.flatpak ];
       script = ''
-	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo && flatpak install -y flathub org.dupot.easyflatpak
+        	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo && flatpak install -y flathub org.dupot.easyflatpak
       '';
     };
 
@@ -27,7 +32,7 @@
       binfmt = true;
     };
 
-    environment.systemPackages = with pkgs;[
+    environment.systemPackages = with pkgs; [
       # APP
       discord
       celluloid
@@ -37,7 +42,7 @@
       git
       btop
       htop
-    
+
       # Fetch en attendant GLF-FETCH
       fastfetch
 
@@ -45,7 +50,7 @@
       libreoffice-fresh
       hunspell
       hunspellDicts.fr-moderne
-    ]; 
+    ];
 
   };
 

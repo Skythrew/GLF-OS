@@ -6,7 +6,13 @@
     utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, utils, ... }:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      utils,
+      ...
+    }:
     let
       system = "x86_64-linux";
       nixpkgsConfig = {
@@ -24,7 +30,7 @@
     in
     {
       iso = self.nixosConfigurations."glf-installer".config.system.build.isoImage;
-      
+
       nixosConfigurations = {
         # Configuration pour l'ISO d'installation avec Calamares
         "glf-installer" = nixpkgs.lib.nixosSystem {
@@ -35,8 +41,8 @@
             ./iso-cfg/configuration.nix
             {
               nixpkgs.overlays = [
-                (self: super: {
-                  calamares-nixos-extensions = super.calamares-nixos-extensions.overrideAttrs (oldAttrs: {
+                (_self: super: {
+                  calamares-nixos-extensions = super.calamares-nixos-extensions.overrideAttrs (_oldAttrs: {
                     postInstall = ''
                       cp ${./patches/calamares-nixos-extensions/modules/nixos/main.py}                   $out/lib/calamares/modules/nixos/main.py
                       cp -r ${./patches/calamares-nixos-extensions/config/settings.conf}                 $out/share/calamares/settings.conf
@@ -53,21 +59,23 @@
                 })
               ];
             }
-            ({ config, ... }:
-            {
-              isoImage = {
-                volumeID = nixpkgs.lib.mkDefault "glfos-${config.system.nixos.version}";
-                includeSystemBuildDependencies = false;
-                storeContents = [ config.system.build.toplevel ];
-                squashfsCompression = "zstd -Xcompression-level 22";
-                contents = [
-                  {
-                    source = ./iso-cfg;
-                    target = "/iso-cfg";
-                  }
-                ];
-              };
-            })
+            (
+              { config, ... }:
+              {
+                isoImage = {
+                  volumeID = nixpkgs.lib.mkDefault "glfos-${config.system.nixos.version}";
+                  includeSystemBuildDependencies = false;
+                  storeContents = [ config.system.build.toplevel ];
+                  squashfsCompression = "zstd -Xcompression-level 22";
+                  contents = [
+                    {
+                      source = ./iso-cfg;
+                      target = "/iso-cfg";
+                    }
+                  ];
+                };
+              }
+            )
           ];
         };
 
@@ -91,14 +99,17 @@
         };
       };
 
-      nixosModules = nixosModules;
-    } // utils.lib.eachDefaultSystem (system: 
+      inherit nixosModules;
+    }
+    // utils.lib.eachDefaultSystem (
+      system:
       let
-        pkgs = import nixpkgs { 
-          inherit system; 
-          config = nixpkgsConfig; 
+        pkgs = import nixpkgs {
+          inherit system;
+          config = nixpkgsConfig;
         };
-      in {
+      in
+      {
         devShells.default = pkgs.mkShell {
           buildInputs = [
             pkgs.ruby

@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 {
 
@@ -12,31 +17,31 @@
 
     environment = {
       systemPackages = with pkgs; [
-	pciutils
-	util-linux
-	inxi
-	gawk
+        pciutils
+        util-linux
+        inxi
+        gawk
       ];
       shellAliases = {
-        glf-update  = "sudo nix flake update --flake /etc/nixos";
+        glf-update = "sudo nix flake update --flake /etc/nixos";
         glf-build = "nh os build /etc/nixos -H GLF-OS";
         glf-switch = "nh os switch /etc/nixos -H GLF-OS";
         glf-boot = "nh os boot /etc/nixos -H GLF-OS";
-	glf-systeminfo = ''
-	    echo -e "\n--- Infos ---"; \
-	    inxi -M; \
-	    echo -e "\n--- CPU ---"; \
-	    lscpu | grep -E "(Architecture|CPU op-mode|Vendor ID|Model name|Mode\\(s\\) opératoire\\(s\\) des processeurs|Identifiant constructeur|Nom de modèle)" | awk "{print \$0}"; \
-	    echo -e "\n--- GPU ---"; \
-	    lspci | grep -E "VGA|3D"; \
-	    echo -e "\n--- Disque ---"; \
-	    df -h; \
-	    echo -e "\n--- RAM ---"; \
-	    free -h
-	'';
+        glf-systeminfo = ''
+          	    echo -e "\n--- Infos ---"; \
+          	    inxi -M; \
+          	    echo -e "\n--- CPU ---"; \
+          	    lscpu | grep -E "(Architecture|CPU op-mode|Vendor ID|Model name|Mode\\(s\\) opératoire\\(s\\) des processeurs|Identifiant constructeur|Nom de modèle)" | awk "{print \$0}"; \
+          	    echo -e "\n--- GPU ---"; \
+          	    lspci | grep -E "VGA|3D"; \
+          	    echo -e "\n--- Disque ---"; \
+          	    df -h; \
+          	    echo -e "\n--- RAM ---"; \
+          	    free -h
+          	'';
       };
     };
-    
+
   };
 
 }

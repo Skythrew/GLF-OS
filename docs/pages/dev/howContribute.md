@@ -151,7 +151,7 @@ git checkout -b maNouvelleBranche
 >   - `feature_addSteamEnv`
 >   - `fix_errorWithNixConfig`
 >   - `doc_addIllustrations`
-> - Prenez note que l'utilisation dun caractère "/" utilisé dans les paths peut provoquer des problèmes lorsque vous utilisez le makefile du dépôt. Si vous ne comptez pas l'utiliser, ne tenez pas compte de cette information.
+> - Prenez note que l'utilisation dun caractère "/" utilisé dans les paths peut provoquer des problèmes lorsque vous utilisez le [justfile](https://github.com/casey/just) du dépôt. Si vous ne comptez pas l'utiliser, ne tenez pas compte de cette information.
 
 ### Créer un commit 
 

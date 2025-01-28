@@ -7,7 +7,11 @@ parent: Développement
 # Pré-requis
 
 - Le gestionnaire de paquets `nix`
-- `gnumake`
+- [`just`](https://github.com/casey/just)
+
+```bash
+nix-shell -p just
+```
 
 # Construire
 
@@ -26,5 +30,5 @@ cd Nixos-by-GLF
 3. Construire
 
 ```bash
-make iso 
+just iso 
 ```

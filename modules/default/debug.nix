@@ -1,8 +1,9 @@
-# Module utile pour le développement (débogage, etc.)
-# N'oubliez pas d'ajouter vos dépendances à l'entête :
-# { lib, config, pkgs, ... }:
-
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 {
 

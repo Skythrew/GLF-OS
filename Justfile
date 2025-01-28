@@ -52,6 +52,9 @@ install:
 # Check, fix and format nix code
 fix:
 	#!/usr/bin/env bash
-	find . -name "*.nix" -exec deadnix -eq {} \;
-	find . -name "*.nix" -exec nixfmt -s {} \;
+	find . -type f -name "*.nix" \
+		! -path ./modules/default/debug.nix \
+		! -path ./iso-cfg/customConfig/default.nix \
+		-exec deadnix -eq {} \;
+	find . -type f -name "*.nix" -exec nixfmt -s {} \;
 	statix check .

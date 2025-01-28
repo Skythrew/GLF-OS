@@ -1,3 +1,7 @@
+# Personnalisation de votre ISO
+# N'oubliez pas d'ajouter vos dépendances à l'entête :
+# { lib, config, pkgs, ... }:
+
 _:
 
 {

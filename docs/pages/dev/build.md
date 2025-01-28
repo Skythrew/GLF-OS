@@ -10,7 +10,7 @@ parent: Développement
 - [`just`](https://github.com/casey/just)
 
 ```bash
-nix-shell -p nix just
+nix-shell -p just
 ```
 
 # Construire

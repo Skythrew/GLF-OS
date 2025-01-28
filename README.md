@@ -16,7 +16,7 @@ Pour construire l'ISO, suivez les étapes ci-dessous :
 
 > [!NOTE]  
 > Pré-requis: `just` doit être installé  
-> Peut être installé temporairement via la commande `nix-shell -p just`  
+> Peut être installé temporairement avec `nix-shell -p just`
 
 1. **Contruction de l'iso** :
 
@@ -53,13 +53,23 @@ just check
 ```
 
 > [!NOTE]
-> Les fichiers vérifiés sont ceux qui sont appelés par le flocon (ex: le répertoire glf)
+> Les fichiers vérifiés sont ceux qui sont appelés par le flocon (ex: le répertoire glf).
 > Tant que votre fichier est appelé par le flocon, configuration.nix ou un default.nix, le fichier sera vérifié.
 
-La seconde méthode vérifie la syntaxe et construit la configuration sans générer d'iso (la configuration est mise en cache).
+La seconde méthode évalue le code et construit la configuration sans générer d'iso (la configuration est mise en cache).
 
 ```bash 
 just build
+```
+
+Pour formatter la configuration et vérifier / nettoyer le code, on peut aussi utiliser la commande suivante.
+
+```bash
+# Il faut un nix-shell avec les outils
+nix-shell -p nixfmt-rfc-style deadnix statix
+
+# Vérification et nettoyage du code
+just fix
 ```
 
 4. **Test de la configuration dans une machine virtuelle** :

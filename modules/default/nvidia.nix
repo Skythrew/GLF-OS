@@ -49,6 +49,7 @@ in
 
       dynamicBoost.enable = cfg.laptop;
       powerManagement.enable = cfg.laptop;
+
     };
   };
 }

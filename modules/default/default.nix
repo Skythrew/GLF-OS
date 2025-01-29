@@ -16,6 +16,7 @@
     ./system.nix
     ./update.nix
     ./version.nix
+    ./standBy.nix
   ];
 
 }

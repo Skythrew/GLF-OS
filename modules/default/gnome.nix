@@ -89,14 +89,8 @@
       ];
 
       etc = {
-        "wallpapers/glf/white.jpg".source = pkgs.fetchurl {
-          url = "https://github.com/CORAAL/Nixos-by-GLF/raw/coraal_flakeInit/assets/wallpaper/white.jpg";
-          sha256 = "sha256-XTy91wEVIKZc7A39ruOc1Beg/KG2YUuOXjB2B0oDdTY=";
-        };
-        "wallpapers/glf/dark.jpg".source = pkgs.fetchurl {
-          url = "https://github.com/CORAAL/Nixos-by-GLF/raw/coraal_flakeInit/assets/wallpaper/dark.jpg";
-          sha256 = "sha256-zkybmVAcclbg92u16yZ6QhFCvaXeGtYs3yCxfJWx390=";
-        };
+        "wallpapers/glf/white.jpg".source = ../../assets/wallpaper/white.jpg;
+        "wallpapers/glf/dark.jpg".source = ../../assets/wallpaper/dark.jpg;
       };
     };
 

@@ -3,11 +3,15 @@ name: Build GLF-OS Configurations
 on:
   push:
     branches: [main, dev]
-    paths: ['**/*.nix']
+    paths:
+      - '**/*.nix'
+      - '**/*.lock'
 
   pull_request:
     branches: ['**'] 
-    paths: ['**/*.nix']
+    paths:
+      - '**/*.nix'
+      - '**/*.lock'
 
   workflow_dispatch:
 
@@ -21,7 +25,7 @@ jobs:
         uses: cachix/install-nix-action@v17
 
       - name: Build GLF
-        run: nix run github:Mic92/nix-fast-build -- --no-nom  --skip-cached --systems 'x86_64-linux' -f .#nixosConfigurations.glf-installer.config.system.build.toplevel
+        run: nix build .#nixosConfigurations.glf-installer.config.system.build.toplevel
         continue-on-error: false
 
   test-user-config:
@@ -33,7 +37,7 @@ jobs:
       - uses: cachix/install-nix-action@v17
       
       - name: Build User Test Configuration
-        run: nix run github:Mic92/nix-fast-build -- --no-nom  --skip-cached --systems 'x86_64-linux' -f .#nixosConfigurations.user-test.config.system.build.toplevel
+        run: nix build .#nixosConfigurations.user-test.config.system.build.toplevel
 
   report:
     name: Final Status

@@ -1,12 +1,12 @@
 ---
-title: Installer un paquet provenant de Nix
+title: Installer un paquet provenant de Nix sans flatpak
 layout: default
 parent: Documentation
 ---
 
-# Comment installer des paquets nix sans flatpak 
+# Comment installer un paquet nix sans flatpak 
 
-Nous vous conseillons de lire la page [configuration personnalisée](/pages/documentation/customconfiguration.html) et nous vous rappelons que cet usage est strictement réservé à ceux qui savent ce qu'ils font.
+Nous vous conseillons de lire la page concernant les [configurations personnalisées](./customconfiguration.html) et nous vous rappelons que cet usage est strictement réservé à ceux qui savent ce qu'ils font.
 GLFOS ne supporte pas les modifications de configurations réalisées par vos propre soins.
 
 Cette étape n'est qu'à faire une seule fois. 
@@ -51,18 +51,3 @@ Enfin, appliquez la configuration avec :
 ```bash
 glf-switch
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

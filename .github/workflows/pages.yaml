@@ -35,9 +35,12 @@ jobs:
         with:
           ruby-version: '3.3'
           bundler-cache: true
+          bundler: '2.5.9'
 
       - name: Install dependencies
-        run: bundle install
+        run: |
+          bundle config set path 'vendor/bundle'
+          bundle install
         working-directory: docs
 
       - name: Setup GitHub Pages

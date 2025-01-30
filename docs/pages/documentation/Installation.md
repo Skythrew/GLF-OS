@@ -29,7 +29,7 @@ nav_order: 1
 	{: .info }
 	> L'hébergeur du lien vers l'iso a une limite de **100 téléchargements par heure**.
 
-- <img src="../../assets/images/computer.svg" style="width: 32px; height: 32px; vertical-align: middle;"> Un ordinateur répondant à la [configuration minimale](/pages/documentation/minimalConfiguration.html).
+- <img src="../../assets/images/computer.svg" style="width: 32px; height: 32px; vertical-align: middle;"> Un ordinateur répondant à la [configuration minimale](./minimalConfiguration.html).
 - <img src="../../assets/images/network.svg" style="width: 32px; height: 32px; vertical-align: middle;"> Une connexion internet.
 	
 ## <img src="../../assets/images/checksum.svg" style="width: 24px; height: 24px; vertical-align: middle;"> Vérification du Checksum (Optionnel mais recommandé)

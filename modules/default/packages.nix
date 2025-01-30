@@ -43,6 +43,28 @@
       btop
       htop
 
+      # Compression
+      arj
+      brotli
+      bzip2
+      cpio
+      gnutar
+      gzip
+      lha
+      libarchive
+      lrzip
+      lz4
+      lzop
+      p7zip
+      pbzip2
+      pigz
+      pixz
+      unrar
+      unzip
+      xz
+      zip
+      zstd
+
       # Fetch en attendant GLF-FETCH
       fastfetch
 

@@ -1,0 +1,50 @@
+name: Build GLF-OS Configurations
+
+on:
+  push:
+    branches: [main, dev]
+    paths: ['**/*.nix']
+
+  pull_request:
+    branches: ['**'] 
+    paths: ['**/*.nix']
+
+  workflow_dispatch:
+
+jobs:
+  buildGLF-Configurations:
+    runs-on: [ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v17
+
+      - name: Build GLF
+        run: nix run github:Mic92/nix-fast-build -- --no-nom  --skip-cached --systems 'x86_64-linux' -f .#nixosConfigurations.glf-installer.config.system.build.toplevel
+        continue-on-error: false
+
+  test-user-config:
+    name: Test User Configuration
+    runs-on: ubuntu-latest
+    needs: []
+    steps:
+      - uses: actions/checkout@v3
+      - uses: cachix/install-nix-action@v17
+      
+      - name: Build User Test Configuration
+        run: nix run github:Mic92/nix-fast-build -- --no-nom  --skip-cached --systems 'x86_64-linux' -f .#nixosConfigurations.user-test.config.system.build.toplevel
+
+  report:
+    name: Final Status
+    runs-on: ubuntu-latest
+    needs: [buildGLF-Configurations, test-user-config]
+    steps:
+      - name: Combine Results
+        run: |
+          echo "Build status:"
+          echo "- Installer: ${{ needs.buildGLF-Configurations.result }}"
+          echo "- Installer: ${{ contains(needs.*.result, 'success') && '✅' || '❌' }}"
+          echo "- User Config: ${{ needs.test-user-config.result }}"
+          echo "✅ Testing completed"
+        if: always()

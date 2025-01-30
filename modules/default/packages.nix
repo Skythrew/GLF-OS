@@ -42,6 +42,7 @@
       git
       btop
       htop
+      transmission_4-gtk
 
       # Compression
       arj

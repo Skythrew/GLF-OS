@@ -6,11 +6,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1738232296,
-        "narHash": "sha256-j1J2f+tTD6+LZ5n4CxFLiAm6xSl3Bs+kdoDHZcOqp8Q=",
+        "lastModified": 1738233763,
+        "narHash": "sha256-4iwn2FbFb6/exy266pT/GoEQRtHiTH8augj+hUgOSiE=",
         "owner": "Gaming-Linux-FR",
         "repo": "GLF-OS",
-        "rev": "e15e6ba66ea97fc618098fbc780f3c087e695e1c",
+        "rev": "d16444a343db1d0d880657b37b80e62fc2b8811c",
         "type": "github"
       },
       "original": {
@@ -38,11 +38,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1738023785,
-        "narHash": "sha256-BPHmb3fUwdHkonHyHi1+x89eXB3kA1jffIpwPVJIVys=",
+        "lastModified": 1738163270,
+        "narHash": "sha256-B/7Y1v4y+msFFBW1JAdFjNvVthvNdJKiN6EGRPnqfno=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "2b4230bf03deb33103947e2528cac2ed516c5c89",
+        "rev": "59e618d90c065f55ae48446f307e8c09565d5ab0",
         "type": "github"
       },
       "original": {

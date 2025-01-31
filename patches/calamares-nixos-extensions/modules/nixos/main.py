@@ -26,7 +26,7 @@ _ = gettext.translation(
 # ====================================================
 # Configuration.nix (Modified)
 # ====================================================
-cfghead = """  { inputs, config, pkgs, lib, ... }:
+cfghead = """{ inputs, config, pkgs, lib, ... }:
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   imports =
@@ -46,7 +46,10 @@ cfg_nvidia = """  glf.nvidia_config = {
 """
 
 cfgbootefi = """  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "@@bootdev@@";
+  boot.loader.grub.efiSupport = true;
+  boot.loader.grub.useOSProber = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
 """
@@ -312,6 +315,7 @@ def run():
     # Check bootloader
     if fw_type == "efi":
         cfg += cfgbootefi
+        catenate(variables, "bootdev", bootdev)
     elif bootdev != "nodev":
         cfg += cfgbootbios
         catenate(variables, "bootdev", bootdev)

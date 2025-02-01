@@ -6,17 +6,7 @@
 }:
 
 {
-  plymouth = {
-      enable = true;
-      theme = "rings";
-      themePackages = with pkgs; [
-        # By default we would install all themes
-        (adi1090x-plymouth-themes.override {
-          selected_themes = [ "rings" ];
-        })
-      ];
-    };
-
+  
   options.glf.boot.enable = lib.mkOption {
     description = "Enable GLF Boot configurations";
     type = lib.types.bool;
@@ -31,7 +21,17 @@
       kernelPackages = lib.mkDefault pkgs.linuxPackages_zen;
       kernelParams =
         if builtins.elem "kvm-amd" config.boot.kernelModules then [ "amd_pstate=active" ] else [ ];
+      plymouth = {
+      enable = true;
+      theme = "rings";
+      themePackages = with pkgs; [
+        # By default we would install all themes
+        (adi1090x-plymouth-themes.override {
+          selected_themes = [ "rings" ];
+        })
+      ];
     };
+   };
 
   };
 

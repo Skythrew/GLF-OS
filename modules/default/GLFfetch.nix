@@ -12,7 +12,7 @@ in
 
 {
 
-  option.glf.packages.GLFfetch.enable = lib.mkOption {
+  options.glf.packages.GLFfetch.enable = lib.mkOption {
     description = "Enable GLFfetch program";
     type = lib.types.bool;
     default = true;

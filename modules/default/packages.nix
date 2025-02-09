@@ -5,6 +5,11 @@
   ...
 }:
 
+let
+  ### Place custom package here
+  GLFfetch = pkgs.callPackage ../../pkgs/GLFfetch {};
+in
+
 {
 
   options.glf.packages.enable = lib.mkOption {
@@ -68,6 +73,7 @@
 
       # Fetch en attendant GLF-FETCH
       fastfetch
+      GLFfetch
 
       # Bureautique
       libreoffice-fresh

@@ -45,13 +45,5 @@ stdenvNoCC.mkDerivation rec {
 
     ln -s $out/bin/GLFfetch $out/bin/GLFfetch-nixos
   '';
-  
-  meta = with stdenvNoCC.lib; {
-    description = "A customized neofetch config file built for the GLF Linux challenges (a fork of GLFfetch to support nix)";
-    homepage = "https://github/minegameYTB/GLFfetch-nixos";
-    license = licenses.gpl3;
-    maintainers = with maintainers; [ minegameYTB ];
-    platforms = lib.platforms.linux;
-  };
 }
 

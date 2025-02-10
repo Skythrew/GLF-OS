@@ -7,7 +7,7 @@
 
 let
   ### Place custom pkgs here
-  GLFfetch = pkgs.callPackage ../../pkgs/GLFfetch {};
+  GLFfetch = pkgs.callPackage ../../pkgs/GLFfetch { glfIcon = "GLFos"; };
 in
 
 {

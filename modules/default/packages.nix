@@ -71,8 +71,13 @@
 
       # Bureautique
       libreoffice-fresh
+
+      # Language
+      poppler_data
       hunspell
-      hunspellDicts.fr-moderne
+      hunspellDicts.fr-any
+      hyphen
+      texlivePackages.hyphen-french
     ];
 
   };

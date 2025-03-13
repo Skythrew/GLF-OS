@@ -60,7 +60,12 @@ stdenvNoCC.mkDerivation rec {
     makeWrapper ${fastfetch}/bin/fastfetch $out/bin/GLFfetch \
       --add-flags "--config $assets/share/${pname}/challenge.jsonc" \
       --prefix PATH : ${coreutils}/bin:${gawk}/bin
-
-    ln -s $out/bin/GLFfetch $out/bin/GLFfetch-nixos
   '';
+
+  meta = {
+    description = "A another 'fetch', but with custom configuration (build with fastfetch)";
+    homepage = "https://github.com/Gaming-Linux-FR/GLFfetch";
+    license = lib.licenses.mit;
+    mainProgram = "GLFfetch";
+  };
 }

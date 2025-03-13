@@ -1,4 +1,4 @@
-{
+{ 
   lib,
   stdenvNoCC, 
   substituteAll, 
@@ -60,13 +60,14 @@ stdenvNoCC.mkDerivation rec {
     ### Make wrapper script that pass right args to fastfetch
     makeWrapper ${fastfetch}/bin/fastfetch $out/bin/GLFfetch \
       --add-flags "--config $assets/share/${pname}/challenge.jsonc" \
-      --prefix PATH : ${coreutils}/bin:${gawk}/bin
+      --set PATH ${lib.makeBinPath [ coreutils gawk ]}
   '';
-
+  
   meta = {
     description = "A customized neofetch config file built for the GLF Linux challenges (github.com/minegameYTB/GLFfetch-nixos is it's fork)";
     homepage = "https://github.com/Gaming-Linux-FR/GLFfetch";
     license = lib.licenses.mit;
     mainProgram = "GLFfetch";
   };
+
 }

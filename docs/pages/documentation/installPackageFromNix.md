@@ -6,8 +6,7 @@ parent: Documentation
 
 # Comment installer un paquet nix sans flatpak 
 
-Nous vous conseillons de lire la page concernant les [configurations personnalisées](./customconfiguration.html) et nous vous rappelons que cet usage est strictement réservé à ceux qui savent ce qu'ils font.
-GLFOS ne supporte pas les modifications de configurations réalisées par vos propre soins.
+GLFOS ne supporte pas les modifications de configurations réalisées par vos propre soins, mais nous vous indiquons ci dessous comment inclure de nouveaux package à votre base GLF OS provenant de Nix OS plutôt que par flatpak. Vous pouvez connaitre le catalogue du nix-store et le nom des paquets à inclure à votre fichier de conf.nix ici : https://search.nixos.org/packages
 
 Cette étape n'est qu'à faire une seule fois. 
 

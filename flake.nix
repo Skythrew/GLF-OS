@@ -63,7 +63,7 @@
               { config, ... }:
               {
                 isoImage = {
-                  volumeID = nixpkgs.lib.mkDefault "glfos-${config.system.nixos.version}";
+                  volumeID = nixpkgs.lib.mkDefault "glfos-alpha-${config.system.nixos.version}";
                   includeSystemBuildDependencies = false;
                   storeContents = [ config.system.build.toplevel ];
                   squashfsCompression = "zstd -Xcompression-level 22";

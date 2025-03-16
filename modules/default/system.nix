@@ -33,6 +33,7 @@
         vaapiVdpau
         libvdpau-va-gl
         libva
+        libva-utils
       ];
     };
 

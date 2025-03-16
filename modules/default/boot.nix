@@ -23,7 +23,7 @@
         if builtins.elem "kvm-amd" config.boot.kernelModules then [ "amd_pstate=active" ] else [ ];
       plymouth = {
       enable = true;
-      theme = "rings";
+      theme = "blockchain";
       themePackages = with pkgs; [
         # By default we would install all themes
         (adi1090x-plymouth-themes.override {

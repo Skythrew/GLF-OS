@@ -63,7 +63,7 @@
               { config, ... }:
               {
                 isoImage = {
-                  volumeID = nixpkgs.lib.mkDefault "glf-alpha-${config.system.nixos.version}";
+                  volumeID = "GLF-OS-ALPHA-OMNISLASH"; #Nom à changer en fonction de la nomination GLF OS
                   includeSystemBuildDependencies = false;
                   storeContents = [ config.system.build.toplevel ];
                   squashfsCompression = "zstd -Xcompression-level 22";

@@ -24,12 +24,7 @@ in
     ];
 
     ### NerdFonts
-    fonts.packages = with pkgs; [
-      (nerdfonts.override { fonts = [ "UbuntuMono" ]; })
-    ];
- 
-    ### Replace actual syntax on 25.05 by:
-    #fonts.packages = with pkgs; [ nerd-fonts.ubuntu-mono ];
+ fonts.packages = with pkgs; [ pkgs.nerd-fonts.noto ];
 
   };
 

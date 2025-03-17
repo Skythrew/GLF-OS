@@ -43,6 +43,7 @@
       htop
       transmission_4-gtk
       vivaldi
+      libva-utils
 
       # Compression
       arj

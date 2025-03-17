@@ -35,18 +35,28 @@ clean:
 # Copy image and compute sha256sum
 install:
 	#!/usr/bin/env bash
-	SRC_DIR := result/iso
-	DEST_DIR := iso
-	GIT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
-	SRC_IMG=$$(ls -t $(SRC_DIR) | tail -1); \
-	DST_IMG="$${SRC_IMG/-x86_64-linux.iso/_$(GIT_BRANCH).iso}"; \
-	if [ -n "$$SRC_IMG" ]; then \
-		echo "Copying $(SRC_DIR)/$$SRC_IMG to $(DEST_DIR)/$$DST_IMG ..."; \
-		install -d $(DEST_DIR); \
-		install -m 644 "$(SRC_DIR)/$$SRC_IMG" $(DEST_DIR)/$$DST_IMG && \
-		cd $(DEST_DIR) && \
-		sha256sum "$$DST_IMG" > "$$DST_IMG.sha256sum"; \
-		cat "$$DST_IMG.sha256sum"; \
+		ISO_FILE=$(find result/iso -name "*.iso") # Trouve le fichier ISO généré par NixOS
+	if [ -n "$ISO_FILE" ]; then
+		echo "Found ISO: $ISO_FILE"
+		cp "$ISO_FILE" "GLF-OS-ALPHA-OMNISLASH.iso" # Copie avec la nomination GLF OS
+		sha256sum "GLF-OS-ALPHA-OMNISLASH.iso" > "GLF-OS-ALPHA-OMNISLASH.iso.sha256sum"
+		cat "GLF-OS-ALPHA-OMNISLASH.iso.sha256sum"
+	else
+		echo "No ISO file found in result/iso"
+
+#Ancienne façon de nommer
+# SRC_DIR := result/iso
+#	DEST_DIR := iso
+#	GIT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
+#	SRC_IMG=$$(ls -t $(SRC_DIR) | tail -1); \
+#	DST_IMG="$${SRC_IMG/-x86_64-linux.iso/_$(GIT_BRANCH).iso}"; \
+#	if [ -n "$$SRC_IMG" ]; then \
+#		echo "Copying $(SRC_DIR)/$$SRC_IMG to $(DEST_DIR)/$$DST_IMG ..."; \
+#		install -d $(DEST_DIR); \
+#		install -m 644 "$(SRC_DIR)/$$SRC_IMG" $(DEST_DIR)/$$DST_IMG && \
+#		cd $(DEST_DIR) && \
+#		sha256sum "$$DST_IMG" > "$$DST_IMG.sha256sum"; \
+#		cat "$$DST_IMG.sha256sum"; \
 	fi
 
 # Check, fix and format nix code

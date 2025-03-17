@@ -36,13 +36,14 @@
       # APP
       discord
       celluloid
-      chromium
       pciutils
       usbutils
       git
       btop
       htop
       transmission_4-gtk
+      vivaldi
+      libva-utils
 
       # Compression
       arj

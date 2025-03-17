@@ -2,7 +2,7 @@
   description = "GLF-OS";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     utils.url = "github:numtide/flake-utils";
   };
 
@@ -63,7 +63,7 @@
               { config, ... }:
               {
                 isoImage = {
-                  volumeID = nixpkgs.lib.mkDefault "glfos-alpha-${config.system.nixos.version}";
+                  volumeID = "GLF-OS-ALPHA-OMNISLASH"; #Nom à changer en fonction de la nomination GLF OS
                   includeSystemBuildDependencies = false;
                   storeContents = [ config.system.build.toplevel ];
                   squashfsCompression = "zstd -Xcompression-level 22";

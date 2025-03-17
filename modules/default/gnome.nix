@@ -141,7 +141,7 @@
                 "dash-to-dock@micxgx.gmail.com"
               ];
               favorite-apps = [
-                "vivaldi.desktop"
+                "vivaldi-stable.desktop"
                 "steam.desktop"
                 "net.lutris.Lutris.desktop"
                 "com.heroicgameslauncher.hgl.desktop"

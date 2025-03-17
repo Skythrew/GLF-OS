@@ -24,10 +24,7 @@ in
     ];
 
     ### NerdFonts
-    fonts.packages = with pkgs; [
-      (pkgs.nerd-fonts.droid-sans-mono.overrideAttrs (oldAttrs: { fonts = [ "UbuntuMono" ]; }))
-    ];
-
+ fonts.packages = with pkgs; [ pkgs.nerd-fonts.noto ];
 
   };
 

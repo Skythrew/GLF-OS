@@ -43,6 +43,7 @@ install:
 		cat "GLF-OS-ALPHA-OMNISLASH.iso.sha256sum"
 	else
 		echo "No ISO file found in result/iso"
+	fi
 
 #Ancienne façon de nommer
 # SRC_DIR := result/iso
@@ -57,7 +58,7 @@ install:
 #		cd $(DEST_DIR) && \
 #		sha256sum "$$DST_IMG" > "$$DST_IMG.sha256sum"; \
 #		cat "$$DST_IMG.sha256sum"; \
-	fi
+
 
 # Check, fix and format nix code
 fix:

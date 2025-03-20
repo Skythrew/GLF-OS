@@ -17,7 +17,7 @@
 
     boot = {
       tmp.cleanOnBoot = true;
-      supportedFilesystems.zfs = lib.mkDefault false;
+      #supportedFilesystems.zfs = lib.mkDefault false;
       kernelPackages = lib.mkDefault pkgs.linuxPackages_zen;
       kernelParams =
         if builtins.elem "kvm-amd" config.boot.kernelModules then [ "amd_pstate=active" ] else [ ];

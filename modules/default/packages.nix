@@ -44,6 +44,7 @@
       transmission_4-gtk
       vivaldi
       libva-utils
+      ffmpeg
 
       # Compression
       arj

@@ -63,7 +63,7 @@
               { config, ... }:
               {
                 isoImage = {
-                  volumeID = "GLF-OS-ALPHA-OMNISLASH_2"; #Nom à changer en fonction de la nomination GLF OS
+                  volumeID = "GLF-OS-ALPHA-OMNISLASH_3"; #Nom à changer en fonction de la nomination GLF OS
                   includeSystemBuildDependencies = false;
                   storeContents = [ config.system.build.toplevel ];
                   squashfsCompression = "zstd -Xcompression-level 22";

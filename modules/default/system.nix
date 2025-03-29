@@ -25,6 +25,8 @@
         vaapiVdpau
         libvdpau-va-gl
         libva
+        vulkan-loader
+        vulkan-validation-layers
       ];
       extraPackages32 = with pkgs; [
         intel-gpu-tools

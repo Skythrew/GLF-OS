@@ -30,6 +30,8 @@
           extraGSettingsOverrides = ''
               [org.gnome.mutter]
             experimental-features=['scale-monitor-framebuffer']
+              [org.gnome.settings-daemon.peripherals]
+            numlock-state=['on']
           '';
         };
       };

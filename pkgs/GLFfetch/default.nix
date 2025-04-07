@@ -20,7 +20,7 @@ stdenvNoCC.mkDerivation rec {
     owner = "Gaming-Linux-FR";
     repo = pname;
     rev = "a0935f03d32acdeb108798f3fe9cfb18ce5413a1";
-    sha256 = "";
+    sha256 = "sha256-fO+vko4Ef41jXReIhZv2BVPTkETpAslZUrdBhyvVO2w=";
   };
 
   outputs = [ "out" "assets" ];

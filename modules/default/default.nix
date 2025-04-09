@@ -4,6 +4,7 @@
     ./debug.nix
     ./aliases.nix
     ./boot.nix
+    ./branding.nix
     ./firefox.nix
     ./fstrim.nix
     ./gaming.nix

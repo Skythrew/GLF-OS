@@ -5,6 +5,9 @@
   ...
 }:
 
+let
+  plymouth-glfos = pkgs.callPackage ../../pkgs/plymouth-glfos {};
+in
 {
   
   options.glf.boot.enable = lib.mkOption {
@@ -25,12 +28,9 @@
         if builtins.elem "kvm-amd" config.boot.kernelModules then [ "amd_pstate=active" ] else [ ];
       plymouth = {
       enable = true;
-      theme = "blockchain";
+      theme = "glfos";
       themePackages = with pkgs; [
-        # By default we would install all themes
-        (adi1090x-plymouth-themes.override {
-          selected_themes = [ "blockchain" ];
-        })
+        plymouth-glfos
       ];
     };
    };

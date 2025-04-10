@@ -109,7 +109,7 @@ in
       profiles.gdm.databases = [
         {
           settings."org/gnome/login-screen" = {
-            logo = ''${glfos-branding}/share/icons/hicolor/48x48/emblems/glfos-logo.png'';
+            logo = ''${glfos-branding}/share/icons/hicolor/48x48/emblems/glfos-logo-light.png'';
           };
         }
       ];

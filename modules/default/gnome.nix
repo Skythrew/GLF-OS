@@ -5,8 +5,10 @@
   ...
 }:
 
+let
+  glfos-branding = pkgs.callPackage ../../pkgs/glfos-branding {};
+in
 {
-
   options.glf.gnome.enable = lib.mkOption {
     description = "Enable GLF Gnome configurations";
     type = lib.types.bool;
@@ -104,6 +106,13 @@
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     programs.dconf = {
       enable = true;
+      profiles.gdm.databases = [
+        {
+          settings."org/gnome/login-screen" = {
+            logo = ''${glfos-branding}/share/icons/hicolor/48x48/emblems/glfos-logo.png'';
+          };
+        }
+      ];
       profiles.user.databases = [
         {
           settings = {

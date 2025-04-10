@@ -67,6 +67,7 @@
                   includeSystemBuildDependencies = false;
                   storeContents = [ config.system.build.toplevel ];
                   squashfsCompression = "zstd -Xcompression-level 22";
+                  efiSplashImage = ./assets/boot/glf-efi.png;
                   contents = [
                     {
                       source = ./iso-cfg;

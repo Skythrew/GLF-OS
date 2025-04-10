@@ -10,6 +10,7 @@
     ./gaming.nix
     ./gnome.nix
     ./nh.nix
+    ./numlock.nix
     ./nvidia.nix
     ./packages.nix
     ./pipewire.nix

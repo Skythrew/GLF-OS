@@ -18,7 +18,7 @@ in
 
   config = lib.mkIf config.glf.boot.enable {
 
-    boot.loader.grub.splashImage = ../../assets/boot/glf-bootloader.png;
+  #  boot.loader.grub.splashImage = ../../assets/boot/glf-bootloader.png;
 
     boot = {
       tmp.cleanOnBoot = true;

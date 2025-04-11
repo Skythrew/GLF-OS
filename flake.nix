@@ -1,8 +1,9 @@
+# flake.nix (Version "dev" corrigée avec specialArgs)
 {
   description = "GLF-OS";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable"; # Base stable
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     utils.url = "github:numtide/flake-utils";
   };
@@ -20,20 +21,19 @@
 
       nixpkgsConfig = {
         allowUnfree = true;
-  
       };
 
-# Configuration pour le nixpkgs stable (sera le 'pkgs' par défaut)
+      # Utilisation de nixpkgsConfig pour la cohérence
       pkgsStable = import nixpkgs {
         inherit system;
-        config.allowUnfree = true;
+        config = nixpkgsConfig; 
       };
 
-      # Configuration pour le nixpkgs unstable (sera passé en argument spécial)
       pkgsUnstable = import nixpkgs-unstable {
         inherit system;
-        config.allowUnfree = true;
+        config = nixpkgsConfig; 
       };
+
 
       nixosModules = {
         default = import ./modules/default;
@@ -41,87 +41,87 @@
 
       baseModules = [
         nixosModules.default
-        { nixpkgs.config = nixpkgsConfig; }
+        { nixpkgs.config = nixpkgsConfig; } # Passe la config aux modules
       ];
+
+
+      specialArgs = {
+        # Rend pkgsUnstable disponible pour les modules
+        pkgs-unstable = pkgsUnstable;
+      };
 
     in
     {
       iso = self.nixosConfigurations."glf-installer".config.system.build.isoImage;
 
-      nixosConfigurations = {
+    nixosConfigurations = {
         # Configuration pour l'ISO d'installation avec Calamares
         "glf-installer" = nixpkgs.lib.nixosSystem {
-          inherit system;
+          # <<<=== AJOUT DE 'inherit specialArgs' ===>>>
+          inherit system specialArgs; # Passe les arguments spéciaux aux modules
           modules = baseModules ++ [
             "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix"
             "${nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
             ./iso-cfg/configuration.nix
-            {
+            { # Overlay Calamares
               nixpkgs.overlays = [
                 (_self: super: {
                   calamares-nixos-extensions = super.calamares-nixos-extensions.overrideAttrs (_oldAttrs: {
                     postInstall = ''
-                      cp ${./patches/calamares-nixos-extensions/modules/nixos/main.py}                   $out/lib/calamares/modules/nixos/main.py
-                      cp -r ${./patches/calamares-nixos-extensions/config/settings.conf}                 $out/share/calamares/settings.conf
-                      cp -r ${./patches/calamares-nixos-extensions/config/modules/packagechooser.conf}   $out/share/calamares/modules/packagechooser.conf
-                      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/show.qml}        $out/share/calamares/branding/nixos/show.qml
-                      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/white.png}       $out/share/calamares/branding/nixos/white.png
-                      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/base.png}        $out/share/calamares/branding/nixos/base.png
-                      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/fast.png}        $out/share/calamares/branding/nixos/fast.png
-                      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/gaming.png}      $out/share/calamares/branding/nixos/gaming.png
-                      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/logo-glf-os.svg} $out/share/calamares/branding/nixos/logo-glf-os.svg
-                      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/branding.desc}   $out/share/calamares/branding/nixos/branding.desc
+                      cp ${./patches/calamares-nixos-extensions/modules/nixos/main.py}              $out/lib/calamares/modules/nixos/main.py
+                      cp -r ${./patches/calamares-nixos-extensions/config/settings.conf}             $out/share/calamares/settings.conf
+                      cp -r ${./patches/calamares-nixos-extensions/config/modules/packagechooser.conf} $out/share/calamares/modules/packagechooser.conf
+                      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/show.qml}           $out/share/calamares/branding/nixos/show.qml
+                      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/white.png}         $out/share/calamares/branding/nixos/white.png
+                      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/base.png}          $out/share/calamares/branding/nixos/base.png
+                      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/fast.png}          $out/share/calamares/branding/nixos/fast.png
+                      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/gaming.png}        $out/share/calamares/branding/nixos/gaming.png
+                      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/logo-glf-os.svg}   $out/share/calamares/branding/nixos/logo-glf-os.svg
+                      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/branding.desc}     $out/share/calamares/branding/nixos/branding.desc
                     '';
                   });
                 })
               ];
             }
-            (
+            ( # Options ISO
               { config, ... }:
               {
                 isoImage = {
-                  volumeID = "GLF-OS-ALPHA-OMNISLASH_3"; #Nom à changer en fonction de la nomination GLF OS
+                  volumeID = "GLF-OS-ALPHA-OMNISLASH_final";
                   includeSystemBuildDependencies = false;
                   storeContents = [ config.system.build.toplevel ];
                   squashfsCompression = "zstd -Xcompression-level 22";
                   efiSplashImage = ./assets/boot/glf-efi.png;
                   contents = [
-                    {
-                      source = ./iso-cfg;
-                      target = "/iso-cfg";
-                    }
+                    { source = ./iso-cfg; target = "/iso-cfg"; }
                   ];
                 };
               }
             )
           ];
-        };
+        }; # Fin glf-installer
 
         # Configuration de test utilisateur simulée
         "user-test" = nixpkgs.lib.nixosSystem {
-          inherit system;
+           # <<<=== AJOUT DE 'inherit specialArgs' (si nécessaire) ===>>>
+          inherit system specialArgs; # Passe les arguments spéciaux ici aussi
           modules = baseModules ++ [
-            {
-              boot.loader.grub = {
-                enable = true;
-                device = "/dev/sda";
-                useOSProber = true;
-              };
-
-              fileSystems."/" = {
-                device = "/dev/sda1";
-                fsType = "ext4";
-              };
+            { # Config VM/test
+              boot.loader.grub = { enable = true; device = "/dev/sda"; useOSProber = true; };
+              fileSystems."/" = { device = "/dev/sda1"; fsType = "ext4"; };
             }
           ];
-        };
-      };
+        }; # Fin user-test
+      }; # Fin nixosConfigurations
 
+      # Exporte les modules définis dans le 'let'
       inherit nixosModules;
-    }
-    // utils.lib.eachDefaultSystem (
+
+    } # Fin des outputs principaux
+    // utils.lib.eachDefaultSystem ( # Début devShell
       system:
       let
+        # pkgs ici utilise l'input nixpkgs (stable) par défaut
         pkgs = import nixpkgs {
           inherit system;
           config = nixpkgsConfig;
@@ -129,18 +129,19 @@
       in
       {
         devShells.default = pkgs.mkShell {
-          buildInputs = [
-            pkgs.ruby
-            pkgs.bundler
-          ];
+          buildInputs = [ pkgs.ruby pkgs.bundler ];
           shellHook = ''
-            cd docs || exit 1
-            echo "Running bundle install and starting Jekyll server..."
-            bundle config set path 'vendor/bundle'
-            bundle install
-            bundle exec jekyll serve
+            if [ -d "docs" ]; then
+              cd docs || exit 1
+              echo "Running bundle install and starting Jekyll server..."
+              bundle config set path 'vendor/bundle' --local # Utiliser --local
+              bundle install
+              bundle exec jekyll serve
+            else
+              echo "Directory 'docs' not found. Skipping Jekyll setup."
+            fi
           '';
         };
       }
-    );
+    ); # Fin devShell
 }

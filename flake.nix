@@ -87,7 +87,7 @@
               { config, ... }:
               {
                 isoImage = {
-                  volumeID = "GLF-OS-ALPHA-OMNISLASH_final";
+                  volumeID = "GLF-OS-ALPHA-OMNISLASH_ROLLING";
                   includeSystemBuildDependencies = false;
                   storeContents = [ config.system.build.toplevel ];
                   squashfsCompression = "zstd -Xcompression-level 22";

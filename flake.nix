@@ -18,6 +18,11 @@
     let
       system = "x86_64-linux";
 
+      nixpkgsConfig = {
+        allowUnfree = true;
+  
+      };
+
 # Configuration pour le nixpkgs stable (sera le 'pkgs' par défaut)
       pkgsStable = import nixpkgs {
         inherit system;

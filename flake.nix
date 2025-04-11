@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     utils.url = "github:numtide/flake-utils";
   };
 
@@ -10,14 +11,25 @@
     {
       self,
       nixpkgs,
+      nixpkgs-unstable,
       utils,
       ...
     }:
     let
       system = "x86_64-linux";
-      nixpkgsConfig = {
-        allowUnfree = true;
+
+# Configuration pour le nixpkgs stable (sera le 'pkgs' par défaut)
+      pkgsStable = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
       };
+
+      # Configuration pour le nixpkgs unstable (sera passé en argument spécial)
+      pkgsUnstable = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
+
       nixosModules = {
         default = import ./modules/default;
       };

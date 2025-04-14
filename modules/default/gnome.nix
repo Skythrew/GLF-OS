@@ -160,7 +160,6 @@ in
                 "net.lutris.Lutris.desktop"
                 "com.heroicgameslauncher.hgl.desktop"
                 "discord.desktop"
-                "thunderbird.desktop"
                 "org.gnome.Nautilus.desktop"
                 "org.dupot.easyflatpak.desktop"
                 "org.gnome.Calendar.desktop"

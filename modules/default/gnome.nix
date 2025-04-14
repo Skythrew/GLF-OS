@@ -112,7 +112,6 @@ in
             # Numlock
             "org/gnome/desktop/peripherals/keyboard" = {
                 numlock-state = true;
-                remember-numlock-state = true;
             };
             "org/gnome/login-screen" = {
                 logo = ''${glfos-branding}/share/icons/hicolor/48x48/emblems/glfos-logo-light.png'';

@@ -108,8 +108,14 @@ in
       enable = true;
       profiles.gdm.databases = [
         {
-          settings."org/gnome/login-screen" = {
-            logo = ''${glfos-branding}/share/icons/hicolor/48x48/emblems/glfos-logo-light.png'';
+          settings = {
+            # Numlock
+            "org/gnome/desktop/peripherals/keyboard" = {
+                numlock-state = true;
+            };
+            "org/gnome/login-screen" = {
+                logo = ''${glfos-branding}/share/icons/hicolor/48x48/emblems/glfos-logo-light.png'';
+            };
           };
         }
       ];

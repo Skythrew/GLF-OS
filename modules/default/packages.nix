@@ -37,15 +37,9 @@
     environment.systemPackages = with pkgs; [
       # APP
       openrgb-with-all-plugins
-      discord
-      celluloid
       pciutils
       usbutils
       git
-      btop-rocm
-      htop
-      transmission_4-gtk
-      vivaldi
       libva-utils
       ffmpeg
 
@@ -74,16 +68,21 @@
       # Fetch en attendant GLF-FETCH
       fastfetch
 
-      # Bureautique
-      libreoffice-fresh
-
       # Language
       poppler_data
       hunspell
       hunspellDicts.fr-any
       hyphen
       texlivePackages.hyphen-french
-    ];
+    ] ++ (lib.optionals (config.glf.environment.edition != "mini") [
+      btop-rocm
+      celluloid
+      discord
+      htop
+      libreoffice-fresh
+      transmission_4-gtk
+      vivaldi
+    ]);
 
   };
 

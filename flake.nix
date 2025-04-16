@@ -68,10 +68,11 @@
                 (_self: super: {
                   calamares-nixos-extensions = super.calamares-nixos-extensions.overrideAttrs (_oldAttrs: {
                     postInstall = ''
-                      cp ${./patches/calamares-nixos-extensions/modules/nixos/main.py}              $out/lib/calamares/modules/nixos/main.py
+                      cp ${./patches/calamares-nixos-extensions/modules/nixos/main.py}               $out/lib/calamares/modules/nixos/main.py
                       cp -r ${./patches/calamares-nixos-extensions/config/settings.conf}             $out/share/calamares/settings.conf
-                      cp -r ${./patches/calamares-nixos-extensions/config/modules/packagechooser.conf} $out/share/calamares/modules/packagechooser.conf
-                      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/show.qml}           $out/share/calamares/branding/nixos/show.qml
+                      cp -r ${./patches/calamares-nixos-extensions/config/modules/edition.conf}      $out/share/calamares/modules/edition.conf
+                      cp -r ${./patches/calamares-nixos-extensions/config/modules/environment.conf}  $out/share/calamares/modules/environment.conf
+                      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/show.qml}          $out/share/calamares/branding/nixos/show.qml
                       cp -r ${./patches/calamares-nixos-extensions/branding/nixos/white.png}         $out/share/calamares/branding/nixos/white.png
                       cp -r ${./patches/calamares-nixos-extensions/branding/nixos/base.png}          $out/share/calamares/branding/nixos/base.png
                       cp -r ${./patches/calamares-nixos-extensions/branding/nixos/fast.png}          $out/share/calamares/branding/nixos/fast.png

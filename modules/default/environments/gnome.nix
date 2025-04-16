@@ -6,16 +6,10 @@
 }:
 
 let
-  glfos-branding = pkgs.callPackage ../../pkgs/glfos-branding {};
+  glfos-branding = pkgs.callPackage ../../../pkgs/glfos-branding {};
 in
 {
-  options.glf.gnome.enable = lib.mkOption {
-    description = "Enable GLF Gnome configurations";
-    type = lib.types.bool;
-    default = true;
-  };
-
-  config = lib.mkIf config.glf.gnome.enable {
+  config = lib.mkIf (config.glf.environment.enable && config.glf.environment.type == "gnome") {
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # Activation de GNOME
@@ -94,11 +88,6 @@ in
         gnome-packagekit
         gnome-font-viewer
       ];
-
-      etc = {
-        "wallpapers/glf/white.jpg".source = ../../assets/wallpaper/white.jpg;
-        "wallpapers/glf/dark.jpg".source = ../../assets/wallpaper/dark.jpg;
-      };
     };
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

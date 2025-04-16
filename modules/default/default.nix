@@ -5,10 +5,10 @@
     ./aliases.nix
     ./boot.nix
     ./branding.nix
+    ./environment.nix
     ./firefox.nix
     ./fstrim.nix
     ./gaming.nix
-    ./gnome.nix
     ./nh.nix
     ./nvidia.nix
     ./packages.nix
@@ -20,6 +20,7 @@
     ./standBy.nix
     ./GLFfetch.nix
     ./nix-disk-manager.nix
+    ./glfos-environment-selection.nix
   ];
 
 }

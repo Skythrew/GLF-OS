@@ -4,7 +4,7 @@
 
   inputs = {
         nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-        glf.url = "github:Gaming-Linux-FR/GLF-OS/dev-2-stable";
+        glf.url = "github:Gaming-Linux-FR/GLF-OS/beta";
         nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 };
 

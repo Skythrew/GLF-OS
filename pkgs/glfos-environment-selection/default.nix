@@ -47,7 +47,7 @@ reboot_text_en="The system has been updated. Changes will be applied on the next
 
 locale="$(locale | grep LANG | cut -d= -f2 | cut -d_ -f1)"
 
-if ! ${pkgs.curl}/bin/curl -L https://github.com/sebanc/linuxloops > /dev/null 2>&1; then
+if ! ${pkgs.curl}/bin/curl -L https://github.com/Gaming-Linux-FR/GLF-OS > /dev/null 2>&1; then
 	if [ -n "''${locale}" ] && [ "''${locale}" == "fr" ]; then
 		read -rp "''${error_internet_fr}"
 		exit 1

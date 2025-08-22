@@ -31,11 +31,12 @@ let
     desktopName = "Welcome Screen";
     exec = "glfos-welcome-screen";
     icon = "glfos-welcome-screen";
+    startupWMClass ="org.dupot.glfos_welcome_screen";
   };
 in
 stdenvNoCC.mkDerivation rec {
   pname = "glfos-welcome-screen";
-  version = "1.5.0";
+  version = "1.6.10";
   
   nativeBuildInputs = [makeWrapper];
   buildInputs = [
@@ -68,7 +69,7 @@ stdenvNoCC.mkDerivation rec {
   
   src = fetchzip {
     url = "https://github.com/imikado/glfos-welcome-screen/releases/download/${version}/bundle.zip";
-    hash = "sha256-pD6IXtjsMOGdS9eD4lYm7fiqs35lNTq8QLSDgTMtxwM=";
+    hash = "sha256-kYUOJp1Pk0BpWPdeD7D0lNjY3PFc6eSjiyV7hJcpumo=";
   };
 
   buildPhase = ''
@@ -76,12 +77,16 @@ stdenvNoCC.mkDerivation rec {
   
       cp -r . $out/
 
+      mkdir -p $out/share/icons
+      cp data/flutter_assets/assets/images/512x512.png $out/share/icons/glfos-welcome-screen.png
+
       makeWrapper $out/glfos_welcome_screen $out/bin/glfos-welcome-screen \
       --set LD_LIBRARY_PATH "${lib.makeLibraryPath buildInputs}:$out/lib"
   
       mkdir -p $out/etc/xdg/autostart
       cp ${desktopFile}/share/applications/glfos-welcome-screen.desktop $out/etc/xdg/autostart/glfos-welcome-screen.desktop
-      cp ${desktopEntry}/share/applications/glfos-welcome-screen.desktop $out/share/applications/glfos-welcome-screen.desktop
+      mkdir -p $out/share/applications
+      cp ${desktopFile}/share/applications/glfos-welcome-screen.desktop $out/share/applications/glfos-welcome-screen.desktop
 
   '';
   

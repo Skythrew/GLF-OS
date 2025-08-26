@@ -64,7 +64,10 @@
           sane-airscan
           epkowa
           utsushi
-          epsonscan2
+          (pkgs.epsonscan2.override {
+            withNonFreePlugins = true;
+            withGui = true;
+          })
         ];
       };
 
